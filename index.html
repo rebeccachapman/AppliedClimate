@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <title>Hurricane Power Outage Model Map</title>
+    <!-- External Stylesheets (we keep integrity to avoid security issues)-->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+  integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+  crossorigin=""/>
+     <!-- Add the Leaflet JavaScript library(we keep this at bottom so page loads faster) -->
+	<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+  integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+  crossorigin=""></script>
+  <!-- Load Esri Leaflet from CDN -->
+    <script src="https://unpkg.com/esri-leaflet@2.1.1/dist/esri-leaflet.js"
+    integrity="sha512-ECQqaYZke9cSdqlFG08zSkudgrdF6I1d8ViSa7I3VIszJyVqw4ng1G8sehEXlumdMnFYfzY0tMgdQa4WCs9IUw=="
+    crossorigin=""></script>
+  <!-- Load Leaflet AJAX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.min.js"></script>
+	</head>
+<body>
+    <!-- Our web map and content will go here -->
+<div id="mapid" style="width: 600px; height: 800px"></div>
+<script>
+	//set variable for map and initialize
+	var mymap = L.map('mapid').setView([28.05, -95.71], 8)
+	var basemap = L.esri.basemapLayer("Topographic").addTo(mymap);
+	//var dark = new L.TileLayer('https://api.mapbox.com/styles/v1/bexchapman/cj928jtp1lff42qlwa676c8kt/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYmV4Y2hhcG1hbiIsImEiOiJWVHM1cWRBIn0.65Nc05pc8Ud8G0i6WiOHnA').addTo(mymap);
+	//var CAMPA = new L.GeoJSON.AJAX('.geojson', {style: {color: "#64100c",weight: 1, fill: true, fillOpacity: 1}}).addTo(mymap);
+
+</script>
+
+
+</body>
+</html>
