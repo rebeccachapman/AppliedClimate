@@ -19,11 +19,15 @@
 	</head>
 <body>
     <!-- Our web map and content will go here -->
-<div id="mapid" style="width: 600px; height: 800px"></div>
+<div id="mapid" style="width: 1000px; height: 800px"></div>
 <script>
 	//set variable for map and initialize
 	var mymap = L.map('mapid').setView([28.05, -95.71], 8)
 	var basemap = L.esri.basemapLayer("Topographic").addTo(mymap);
+	var ctract = L.esri.featureLayer({
+		url: "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Tracts_Blocks/MapServer/0"
+	}).addTo(mymap);
+	// I also tried MapService, dynamicMapLayer
 	//var dark = new L.TileLayer('https://api.mapbox.com/styles/v1/bexchapman/cj928jtp1lff42qlwa676c8kt/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYmV4Y2hhcG1hbiIsImEiOiJWVHM1cWRBIn0.65Nc05pc8Ud8G0i6WiOHnA').addTo(mymap);
 	//var CAMPA = new L.GeoJSON.AJAX('.geojson', {style: {color: "#64100c",weight: 1, fill: true, fillOpacity: 1}}).addTo(mymap);
 
