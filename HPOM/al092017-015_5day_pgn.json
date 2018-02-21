@@ -1,0 +1,3 @@
+{"type":"FeatureCollection", "features": [
+{"type":"Feature","geometry":{"type":"MultiPolygon","coordinates":[]},"properties":{"STORMNAME":"Harvey","STORMTYPE":"TS","ADVDATE":"400 AM CDT Thu Aug 24 2017","ADVISNUM":"15","STORMNUM":9,"FCSTPRD":120,"BASIN":"AL"}}
+]}
