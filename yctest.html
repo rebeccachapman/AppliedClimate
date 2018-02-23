@@ -39,7 +39,9 @@
 	
 
 	
-	var shpfile = new L.Shapefile("http://chapmanrebecca.com/AppliedClimate/tree/master/HPOM/al092017_5day_015_lin.zip");
+	var shpfile = new L.Shapefile("http://chapmanrebecca.com/AppliedClimate/tree/master/HPOM/al092017_5day_015_lin.zip", {onEachFeature: function (feature, layer) {
+    /* Add some colors based on shapefile features */
+    }});
 	
 	
 	var BaseMaps = {
