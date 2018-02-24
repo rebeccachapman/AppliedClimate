@@ -56,12 +56,14 @@
 };	
 		
 	// Create hurricane layers
+    var best_track = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_best_track.zip');
 	var track_forecast = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_5day_015.zip');
-	
+	var winsp = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/2017082400_wsp_120hr5km.zip');
+	var surge = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_esurge10_2017082400.zip');
 
 
     // Create basemap layers -- basemaps http://leaflet-extras.github.io/leaflet-providers/preview/ 
-	var basemap1 = L.esri.basemapLayer("Topographic")
+	var basemap1 = L.esri.basemapLayer("Topographic");
 	var basemap2 = L.esri.basemapLayer("Imagery");
 	
 
@@ -75,10 +77,9 @@
 	
 	
 	// Add layers to map
-	ctract.addTo(mymap)
 	basemap1.addTo(mymap)
 	track_forecast.addTo(mymap)
-	
+	ctract.addTo(mymap)
 	
 	// Create layer control
 	var BaseMaps = {
@@ -87,7 +88,10 @@
 };
     
 	var overlayMaps = {
-    "Advisory Forecast Track, Cone of Uncertainty,and Watches/Warnings": track_forecast
+	"Preliminary Best Track": best_track,
+    "Advisory Forecast Track, Cone of Uncertainty,and Watches/Warnings": track_forecast,
+	"5km Wind Speed Probabilities": winsp,
+	"Storm Surge Probabilities":surge
 };
 
     L.control.layers(BaseMaps,overlayMaps).addTo(mymap);
