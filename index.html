@@ -20,12 +20,24 @@
     <script src="https://unpkg.com/shpjs@latest/dist/shp.js"></script>
 	<script src="http://chapmanrebecca.com/AppliedClimate/HPOM/leaflet.shpfile.js"></script>	
 	
-	</head>
+	<style>
+.info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; background: white; background: rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; } .info h4 { margin: 0 0 5px; color: #777; }	
+.legend { text-align: left; line-height: 18px; color: #555; } .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.7; }</style>
+
+ 
+<h1 align="center"><font face="Arial,Helvetica"><font color="#000000"><font size="+3">Hurricane Power Outage GeoViewer </font></font></font></h1>	
+	
+</head>
 
 <body>
-    <!-- Our web map and content will go here -->
-<div id="mapid" style="width: 1000px; height: 800px"></div>
+ 
+<!-- Our web map and content will go here -->
+
+<div id="mapid" style="width: 1000px; height: 600px; margin-left:auto; margin-right:auto"></div>
+
+
 <script>
+
 		
 	//Create tract layer
 	function style(feature) {
@@ -45,27 +57,31 @@
     
 	// Change color
 	function getColor(d) {
-    return d > 1000 ? '#800026' :
-           d > 500  ? '#BD0026' :
-           d > 200  ? '#E31A1C' :
-           d > 100  ? '#FC4E2A' :
-           d > 50   ? '#FD8D3C' :
-           d > 20   ? '#FEB24C' :
-           d > 10   ? '#FED976' :
+    return d > 80 ? '#800026' :
+           d > 60  ? '#BD0026' :
+           d > 40  ? '#E31A1C' :
+           d > 20  ? '#FC4E2A' :
+           d > 3   ? '#FD8D3C' :
+           d > 2   ? '#FEB24C' :
+          // d > 10   ? '#FED976' :
                       '#FFEDA0';
 };	
-		
+	
+
+var myStyle = {
+"color": "#007bff",
+"weight": 1.2,
+"opacity": 0.65
+};
+
+
 	// Create hurricane layers
-    var best_track = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_best_track.zip');
-	var track_forecast = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_5day_015.zip');
-	var winsp = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/2017082400_wsp_120hr5km.zip');
-	var surge = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_esurge10_2017082400.zip');
+	var track_forecast = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_5day_015.zip',{style: myStyle});
+	var surge = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_esurge10_2017082400.zip',{style:style});
 
 
     // Create basemap layers -- basemaps http://leaflet-extras.github.io/leaflet-providers/preview/ 
-	var basemap1 = L.esri.basemapLayer("Topographic");
-	var basemap2 = L.esri.basemapLayer("Imagery");
-	
+	var basemap = L.esri.basemapLayer("Topographic");
 
 	// Set variable for map and initialize
 	var mymap =  L.map('mapid', {
@@ -77,27 +93,45 @@
 	
 	
 	// Add layers to map
-	basemap1.addTo(mymap)
+	basemap.addTo(mymap)
 	track_forecast.addTo(mymap)
 	ctract.addTo(mymap)
 	
 	// Create layer control
-	var BaseMaps = {
-    "Topographic": basemap1,
-	"Imagery": basemap2
-};
-    
+	var baseMaps ={
+	"Topography":basemap
+};	
+	
 	var overlayMaps = {
-	"Preliminary Best Track": best_track,
     "Advisory Forecast Track, Cone of Uncertainty,and Watches/Warnings": track_forecast,
-	"5km Wind Speed Probabilities": winsp,
 	"Storm Surge Probabilities":surge
 };
 
-    L.control.layers(BaseMaps,overlayMaps).addTo(mymap);
-	
+    L.control.layers(baseMaps,overlayMaps).addTo(mymap);
+
+
+
+
+	var legend = L.control({position: 'bottomright'});
+    legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = [0, 2, 3, 20, 40, 60, 80,100],
+        labels = [];
+
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades.length-1; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] +'%'+'<br>' :'%+');
+    }
+
+    return div;
+};
+	legend.addTo(mymap);
 	
 	
 </script>
+
 </body>
 </html>
