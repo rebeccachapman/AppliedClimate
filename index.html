@@ -81,7 +81,16 @@ var myStyle = {
 
 
     // Create basemap layers -- basemaps http://leaflet-extras.github.io/leaflet-providers/preview/ 
-	var basemap = L.esri.basemapLayer("Topographic");
+	var topo = L.esri.basemapLayer("Topographic");
+  //var blkmarble = L.tileLayer("https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_DayNightBand_ENCC/default/2018-02-28/500m/6/13/36.png")
+  var blkmarble = L.tileLayer('https://map1.vis.earthdata.nasa.gov/wmts-webmerc/VIIRS_Black_Marble/default/{time}/{tilematrixset}{maxZoom}/{z}/{y}/{x}.{format}', {
+  bounds: [[-85.0511287776, -179.999999975], [85.0511287776, 179.999999975]],
+  minZoom: 1,
+  maxZoom: 8,
+  format: 'png',
+  time: '',
+  tilematrixset: 'GoogleMapsCompatible_Level'
+});
 
 	// Set variable for map and initialize
 	var mymap =  L.map('mapid', {
@@ -93,13 +102,15 @@ var myStyle = {
 	
 	
 	// Add layers to map
-	basemap.addTo(mymap)
+	topo.addTo(mymap)
 	track_forecast.addTo(mymap)
 	ctract.addTo(mymap)
 	
 	// Create layer control
 	var baseMaps ={
-	"Topography":basemap
+	"Topography":topo, 
+  "Black Marble":blkmarble
+  //"Earth at Night":earthatnight
 };	
 	
 	var overlayMaps = {
