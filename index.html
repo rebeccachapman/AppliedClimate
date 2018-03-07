@@ -64,7 +64,7 @@ var myStyle = {
 	var track_forecast = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_5day_015.zip',{style: myStyle});
 	var surge = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_esurge10_2017082400.zip',{style:style});
 // Using external REST services
-  var NHC_Atl_trop_cyclones =  L.esri.dynamicMapLayer("https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer");
+  //var NHC_Atl_trop_cyclones =  L.esri.dynamicMapLayer("https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer");
 
 
 // Create basemap layers -- basemaps http://leaflet-extras.github.io/leaflet-providers/preview/ 
@@ -89,7 +89,7 @@ var myStyle = {
 // Add layers to map
 	topo.addTo(mymap)
 	track_forecast.addTo(mymap)
-	ctract.addTo(mymap)
+	//ctract.addTo(mymap)
 	
 // Create layer control
 	var baseMaps ={
@@ -101,7 +101,7 @@ var myStyle = {
     "Advisory Forecast Track, Cone of Uncertainty, and Watches/Warnings": track_forecast,
     "Storm Surge Probabilities": surge,
     "Census Tract": ctract,
-    "Atlantic/Caribbean Tropical Cyclones": NHC_Atl_trop_cyclones
+    //"Atlantic/Caribbean Tropical Cyclones": NHC_Atl_trop_cyclones
 };
     L.control.layers(baseMaps,overlayMaps).addTo(mymap);
 // legend
