@@ -21,15 +21,38 @@
 	<script src="http://chapmanrebecca.com/AppliedClimate/HPOM/leaflet.shpfile.js"></script>	
 	
 	<style>
-.info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; background: white; background: rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; } .info h4 { margin: 0 0 5px; color: #777; }	
-.legend { text-align: left; line-height: 18px; color: #555; } .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.7; }</style>
-
-
-<h1 align="center"><font face="Arial,Helvetica"><font color="#000000"><font size="+3">Hurricane Power Outage GeoViewer </font></font></font></h1>	
+.info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; background: white; background: rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; } 
+.info h4 { margin: 0 0 5px; color: #777; }	
+.legend { text-align: left; line-height: 18px; color: #555; } 
+.legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.7; }
+.container {
+  display:flex;
+  height:100vh;
+  align-content:stretch;
+  
+}
+</style>
 
 </head>
 <body> <!-- Our web map and content will go here -->
-<div id="mapid" style="width: 1000px; height: 600px; margin-left:auto; margin-right:auto"></div>
+
+<h1 align="center"><font face="Arial,Helvetica"><font color="#000000"><font size="+3">Hurricane Power Outage GeoViewer </font></font></font></h1>	
+
+<div class="container">
+<div id="list"  align="left"  style="width: 280px"> 
+     <h3>Map Layers</h3>
+	 <input type="checkbox" id="myCheck"  onclick="myFunction()"> Census Tract
+	 <br></br>
+	 <input type="checkbox" id="myCheck1"  onclick="myFunction1()"> Advisory Forecast Track
+     <br></br>
+	 <input type="checkbox" id="myCheck2"  onclick="myFunction2()"> Storm Surge Probabilities
+	 <br></br>
+	 <input type="checkbox" id="myCheck3"  onclick="myFunction3()"> Atlantic/Caribbean Tropical Cyclones
+</div>
+     <div id="mapid" style="width: 1000px; height: 600px; margin-left:0px; margin-right:auto"></div> 
+</div>
+
+
 
 <script>
 	//Create tract layer
@@ -89,22 +112,16 @@ var myStyle = {
 
 // Add layers to map
 	topo.addTo(mymap)
-	track_forecast.addTo(mymap)
 	//ctract.addTo(mymap)
 	
 // Create layer control
 	var baseMaps ={
 	"Topography":topo, 
-  "Black Marble":blkmarble
+    "Black Marble":blkmarble
   //"Earth at Night":earthatnight
 };	
-	var overlayMaps = {
-    "Advisory Forecast Track, Cone of Uncertainty, and Watches/Warnings": track_forecast,
-    "Storm Surge Probabilities": surge,
-    "Census Tract": ctract,
-    "Atlantic/Caribbean Tropical Cyclones": NHC_Atl_trop_cyclones
-};
-    L.control.layers(baseMaps,overlayMaps).addTo(mymap);
+
+    L.control.layers(baseMaps).addTo(mymap);
 // legend
 	var legend = L.control({position: 'bottomright'});
     legend.onAdd = function (map) {
@@ -120,7 +137,47 @@ var myStyle = {
     return div;
 };
 	legend.addTo(mymap);
+	
+//********************************************add layer control***************************************************	
+function myFunction() {
+    var checkBox = document.getElementById("myCheck");
+    var text = document.getElementById("text");
+    if (checkBox.checked == true){
+        ctract.addTo(mymap);
+    } else {
+        ctract.remove();
+    }
+}	
 
+function myFunction1() {
+    var checkBox = document.getElementById("myCheck1");
+    var text = document.getElementById("text");
+    if (checkBox.checked == true){
+        track_forecast.addTo(mymap);
+    } else {
+        track_forecast.remove();
+    }
+}	
+
+function myFunction2() {
+    var checkBox = document.getElementById("myCheck2");
+    var text = document.getElementById("text");
+    if (checkBox.checked == true){
+        surge.addTo(mymap);
+    } else {
+        surge.remove();
+    }
+}			
+
+function myFunction3() {
+    var checkBox = document.getElementById("myCheck3");
+    var text = document.getElementById("text");
+    if (checkBox.checked == true){
+        NHC_Atl_trop_cyclones.addTo(mymap);
+    } else {
+        NHC_Atl_trop_cyclones.remove();
+    }
+}		
 </script>
 </body>
 </html>
