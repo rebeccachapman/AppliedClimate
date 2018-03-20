@@ -1,9 +1,23 @@
  //Create tract layer with HPOM data
-  var HPOM = 'http://chapmanrebecca.com/AppliedClimate/HPOM/sample.csv'
+ // var HPOM = 'http://chapmanrebecca.com/AppliedClimate/HPOM/sample.csv'
 
+//*************************************merge power outage model output********************************************
+function Get(yourUrl){
+    var Httpreq = new XMLHttpRequest(); // a new request
+    Httpreq.open("GET",yourUrl,false);
+    Httpreq.send(null);
+    return Httpreq.responseText;          
+}
+var HOPM = JSON.parse(Get('http://chapmanrebecca.com/AppliedClimate/HPOM/ctract.geojson'));	
+for (var i = 0; i < HOPM.features.length; i++) {
+    HOPM.features[i].properties.power = 10;	
+
+}
+
+//**************************************************************************************************************** 
 	function style(feature) {
     return {
-        fillColor: getColor(feature.properties.density),
+        fillColor: getColor(feature.properties.power),
         weight: 0.5,
         opacity: 1,
         color: 'black',
@@ -11,7 +25,7 @@
         fillOpacity: 0.7
     };
 } 
-	var ctract = new L.GeoJSON.AJAX('http://chapmanrebecca.com/AppliedClimate/HPOM/ctract.geojson', {style: style})
+	var ctract = new L.GeoJSON(HOPM, {style: style})
 	// Change color
 	function getColor(d) {
     return d > 80 ? '#800026' :
@@ -82,6 +96,8 @@ var myStyle = {
     return div;
 };
 	legend.addTo(mymap);
+	
+
 	
 //********************************************add layer control***************************************************	
 function myFunction() {
