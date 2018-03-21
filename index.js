@@ -32,7 +32,7 @@ for (var j = 0; j < HOPM.features.length; j++) {
 	for (var i = 1; i < jsonObject.length; i++) {
 		result= csvData[i];
         if (result[0]===HOPM.features[j].properties.GEOID10) {
-        HOPM.features[j].properties.power = result[16]*100;	
+        HOPM.features[j].properties.power = (result[16]*100).toFixed(2);	
 		flag =1;
         }		
     }
@@ -45,7 +45,17 @@ for (var j = 0; j < HOPM.features.length; j++) {
 	   j--;
     };
 };
-//**************************************************************************************************************** 
+
+
+//*******************************************Map HOPM output***************************************************************
+	
+// Set variable for map and initialize
+	var mymap =  L.map('mapid', {
+    center: [28.8, -97.2],
+    zoom: 7.5,
+});
+
+	
 	function style(feature) {
     return {
         fillColor: getColor(feature.properties.power),
@@ -53,11 +63,11 @@ for (var j = 0; j < HOPM.features.length; j++) {
         opacity:1,
         color: getColor(feature.properties.power),
         //dashArray: '3',
-        fillOpacity: 0.7
+        fillOpacity: 0.5
     };
 };
-	var ctract = new L.GeoJSON(HOPM, {style: style})
-	// Change color
+
+// Change color
 	function getColor(d) {
     return d > 60 ? '#800026' :
            d > 50  ? '#BD0026' :
@@ -69,6 +79,67 @@ for (var j = 0; j < HOPM.features.length; j++) {
 };	
 
 
+// Add interactions
+function highlightFeature(e) {
+    var layer = e.target;
+
+    layer.setStyle({
+        weight: 3,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 0.5
+    });
+
+    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+        layer.bringToFront();
+    }
+    
+	info.update(layer.feature.properties);
+	
+};
+
+function resetHighlight(e) {
+    geojson.setStyle(style);
+	info.update();
+};
+
+function zoomToFeature(e) {
+    mymap.fitBounds(e.target.getBounds());
+};
+
+function onEachFeature(feature, layer) {
+    layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight,
+        click: zoomToFeature
+    });
+};
+	
+	L.geoJson(HOPM, {style: style}).addTo(mymap);
+	geojson = L.geoJson(HOPM, {
+    style: style,
+    onEachFeature: onEachFeature
+}).addTo(mymap);
+	
+// add info control
+var info = L.control();
+
+info.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this.update();
+    return this._div;
+};
+
+// method that we will use to update the control based on feature properties passed
+info.update = function (props) {
+    this._div.innerHTML = '<h4>HPOM Output</h4>' +  (props ?
+        '<b>Tact: ' + props.GEOID10 + '</b><br /> ' + props.power + ' %'
+        : 'Hover over a census tract');
+};
+
+info.addTo(mymap);	
+	
+//********************************************* add other map layers**********************************************************
 var myStyle = {
 "color": "#007bff",
 "weight": 1.2,
@@ -107,14 +178,8 @@ var myStyle = {
   //https://idpgis.ncep.noaa.gov/arcgis/rest/services/NOS_ESI/ESI_TexasUpperCoast_Maps/ImageServer
 
 
-// Set variable for map and initialize
-	var mymap =  L.map('mapid', {
-    center: [28.8, -97.2],
-    zoom: 7.5,
-});
 
 // Add layers to map
-    ctract.addTo(mymap);
 	topo.addTo(mymap);
 // Create layer control
 	var baseMaps ={
