@@ -104,10 +104,14 @@ var myStyle = {
 	var baseMaps ={
 	"Topography":topo, 
     "Black Marble":blkmarble,
-    "Radar":radar
 };	
 
-    L.control.layers(baseMaps).addTo(mymap);
+var overlayMaps = {
+    "Radar":radar
+};
+
+
+    L.control.layers(baseMaps, overlayMaps).addTo(mymap);
 // legend
 	var legend = L.control({position: 'bottomright'});
     legend.onAdd = function (map) {
