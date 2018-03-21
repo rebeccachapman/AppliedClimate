@@ -1,7 +1,20 @@
- //Create tract layer with HPOM data
- // var HPOM = 'http://chapmanrebecca.com/AppliedClimate/HPOM/sample.csv'
 
-//*************************************merge power outage model output********************************************
+
+//*************************************merge power outage model output with tract ID *****************************
+
+// Retrived data from csv file content
+var url = "http://chapmanrebecca.com/AppliedClimate/HPOM/sample.csv";
+var request = new XMLHttpRequest();  
+request.open("GET", url, false);   
+request.send(null);  
+
+var csvData = new Array();
+var jsonObject = request.responseText.split(/\r?\n|\r/);
+for (var i = 0; i < jsonObject.length; i++) {
+  csvData.push(jsonObject[i].split(','));
+}
+
+// Read tract ID
 function Get(yourUrl){
     var Httpreq = new XMLHttpRequest(); // a new request
     Httpreq.open("GET",yourUrl,false);
@@ -10,9 +23,19 @@ function Get(yourUrl){
 }
 var HOPM = JSON.parse(Get('http://chapmanrebecca.com/AppliedClimate/HPOM/ctract.geojson'));	
 for (var i = 0; i < HOPM.features.length; i++) {
-    HOPM.features[i].properties.power = 10;	
-
+    HOPM.features[i].properties.power = 0;	   
 }
+
+// Merge
+for (var i = 1; i < jsonObject.length; i++) {
+    result= csvData[i];
+    
+	for (var j = 0; j < HOPM.features.length; j++) {
+        if (result[0]===HOPM.features[j].properties.GEOID10) {
+        HOPM.features[j].properties.power = result[16]*100;	
+        }
+    }
+};
 
 //**************************************************************************************************************** 
 	function style(feature) {
@@ -24,8 +47,10 @@ for (var i = 0; i < HOPM.features.length; i++) {
         dashArray: '3',
         fillOpacity: 0.7
     };
-} 
-	var ctract = new L.GeoJSON(HOPM, {style: style})
+};
+
+
+	var ctract = new L.GeoJSON(HOPM, {style: style});
 	// Change color
 	function getColor(d) {
     return d > 80 ? '#800026' :
@@ -37,6 +62,7 @@ for (var i = 0; i < HOPM.features.length; i++) {
           // d > 10   ? '#FED976' :
                       '#FFEDA0';
 };	
+
 var myStyle = {
 "color": "#007bff",
 "weight": 1.2,
@@ -70,7 +96,7 @@ var myStyle = {
 });
 
 // Add layers to map
-	topo.addTo(mymap)
+	topo.addTo(mymap);
 	//ctract.addTo(mymap)
 	
 // Create layer control
@@ -108,7 +134,7 @@ function myFunction() {
     } else {
         ctract.remove();
     }
-}	
+};	
 
 function myFunction1() {
     var checkBox = document.getElementById("myCheck1");
@@ -118,7 +144,7 @@ function myFunction1() {
     } else {
         track_forecast.remove();
     }
-}	
+};	
 
 function myFunction2() {
     var checkBox = document.getElementById("myCheck2");
@@ -128,7 +154,7 @@ function myFunction2() {
     } else {
         surge.remove();
     }
-}			
+};			
 
 function myFunction3() {
     var checkBox = document.getElementById("myCheck3");
@@ -138,4 +164,6 @@ function myFunction3() {
     } else {
         NHC_Atl_trop_cyclones.remove();
     }
-}		
+};		
+
+
