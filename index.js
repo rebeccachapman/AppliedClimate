@@ -87,6 +87,7 @@ var myStyle = {
   time: '',
   tilematrixset: 'GoogleMapsCompatible_Level'
 });
+  var radar = L.esri.dynamicMapLayer({url:'https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/radar_meteo_imagery_nexrad_time/MapServer/', layers:[3]});
 
 // Set variable for map and initialize
 	var mymap =  L.map('mapid', {
@@ -102,8 +103,8 @@ var myStyle = {
 // Create layer control
 	var baseMaps ={
 	"Topography":topo, 
-    "Black Marble":blkmarble
-  //"Earth at Night":earthatnight
+    "Black Marble":blkmarble,
+    "Radar":radar
 };	
 
     L.control.layers(baseMaps).addTo(mymap);
