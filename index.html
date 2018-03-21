@@ -30,19 +30,24 @@
 <h1 align="center"><font face="Arial,Helvetica"><font color="#000000"><font size="+3">Hurricane Power Outage GeoViewer </font></font></font></h1>	
 <h1 id="demo"></h1>
 <div class="container">
-<div id="list"  align="left"  style="width: 280px"> 
+<div id="list"  align="left"  style="width: 370px"> 
      <h3>Map Layers</h3>
-	 <input type="checkbox" id="myCheck"  onclick="myFunction()"> Census Tract
-	   <br></br>
 	 <input type="checkbox" id="myCheck1"  onclick="myFunction1()"> Advisory Forecast Track
-     <br></br>
+       <br></br>
 	 <input type="checkbox" id="myCheck2"  onclick="myFunction2()"> Storm Surge Probabilities
 	   <br></br>
 	 <input type="checkbox" id="myCheck3"  onclick="myFunction3()"> Atlantic/Caribbean Tropical Cyclones
-     <br></br>
-   <input type="checkbox" id="myCheck3"  onclick="myFunction4()"> Watches, Warnings and Advisories
-   <br></br>
-    <h3>Export Files</h3>
+       <br></br>
+     <input type="checkbox" id="myCheck4"  onclick="myFunction4()"> Watches, Warnings and Advisories
+       <br></br>
+     <h3>Export Files</h3>
+	  <input type="checkbox" id="EF1"  > Original HOPM Output in (.csv)
+	    <br></br>
+	  <input type="checkbox" id="EF2"  > Merged HOPM Output and Tract ID (.geojson)
+	    <br></br>
+	  <input type="checkbox" id="EF3"  > Geographic Image (.jpeg)
+	    <br></br>
+	  <button>Export</button>
 </div>
      <div id="mapid" style="width: 1000px; height: 600px; margin-left:0px; margin-right:auto"></div> 
 </div>

@@ -27,43 +27,47 @@ for (var i = 0; i < HOPM.features.length; i++) {
 }
 
 // Merge
-for (var i = 1; i < jsonObject.length; i++) {
-    result= csvData[i];
-    
-	for (var j = 0; j < HOPM.features.length; j++) {
+for (var j = 0; j < HOPM.features.length; j++) {
+    var flag = 0;
+	for (var i = 1; i < jsonObject.length; i++) {
+		result= csvData[i];
         if (result[0]===HOPM.features[j].properties.GEOID10) {
         HOPM.features[j].properties.power = result[16]*100;	
-        }
+		flag =1;
+        }		
     }
+	
+	if(flag === 0){	
+	   delete HOPM.features[j];
+	   HOPM.features = HOPM.features.filter(function( element ) {
+               return element !== undefined;
+       });
+	   j--;
+    };
 };
-
 //**************************************************************************************************************** 
 	function style(feature) {
     return {
         fillColor: getColor(feature.properties.power),
         weight: 1,
-        opacity: getFill(feature.properties.power),
+        opacity:1,
         color: getColor(feature.properties.power),
         //dashArray: '3',
-        fillOpacity: getFill(feature.properties.power)
+        fillOpacity: 0.7
     };
 };
-	var ctract = new L.GeoJSON(HOPM, {style: style});
+	var ctract = new L.GeoJSON(HOPM, {style: style})
 	// Change color
 	function getColor(d) {
-    return d > 80 ? '#800026' :
-           d > 60  ? '#BD0026' :
+    return d > 60 ? '#800026' :
+           d > 50  ? '#BD0026' :
            d > 40  ? '#E31A1C' :
-           d > 20  ? '#FC4E2A' :
-           d > 3   ? '#FD8D3C' :
-           d > 2   ? '#FEB24C' :
-          // d > 10   ? '#FED976' :
-                      '#FFEDA0';
+           d > 30  ? '#FC4E2A' :
+           d > 20  ? '#FD8D3C' :
+           d > 10   ? '#FEB24C' :
+                     '#FFEDA0';
 };	
-  function getFill(d) {
-    return d > 2  ? 1 :
-                    0;
-};  
+
 
 var myStyle = {
 "color": "#007bff",
@@ -87,7 +91,7 @@ var myStyle = {
 
 
 // Create basemap layers -- basemaps http://leaflet-extras.github.io/leaflet-providers/preview/ 
-	var topo = L.esri.basemapLayer("Topographic");
+  var topo = L.esri.basemapLayer("Topographic");
   var gray = L.esri.basemapLayer("Gray");
   var imagery = L.esri.basemapLayer("ImageryClarity");
   //var blkmarble = L.tileLayer("https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_DayNightBand_ENCC/default/2018-02-28/500m/6/13/36.png")
@@ -105,33 +109,32 @@ var myStyle = {
 
 // Set variable for map and initialize
 	var mymap =  L.map('mapid', {
-    center: [29.05, -98],
-    zoom: 6,
-	//layers:[basemap2, track_forecast,ctract]
+    center: [28.8, -97.2],
+    zoom: 7.5,
 });
 
 // Add layers to map
+    ctract.addTo(mymap);
 	topo.addTo(mymap);
 // Create layer control
 	var baseMaps ={
 	"Topographic":topo, 
     "Black Marble":blkmarble,
     "Imagery":imagery,
-    "Light Gray":gray,
-    "Radar":radar
+    "Light Gray":gray
 };	
   var overlayMaps = {
     "Radar":radar
 };
     L.control.layers(baseMaps, overlayMaps).addTo(mymap);
-// legend
+// 
 	var legend = L.control({position: 'bottomright'});
     legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'info legend'),
-        grades = [0, 2, 3, 20, 40, 60, 80,100],
+        grades = [0, 10, 20, 30, 40, 50, 60],
         labels = [];
     // loop through our density intervals and generate a label with a colored square for each interval
-    for (var i = 0; i < grades.length-1; i++) {
+    for (var i = 0; i < grades.length; i++) {
         div.innerHTML +=
             '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
             grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] +'%'+'<br>' :'%+');
@@ -143,16 +146,6 @@ var myStyle = {
 
 	
 //********************************************add layer control***************************************************	
-function myFunction() {
-    var checkBox = document.getElementById("myCheck");
-    var text = document.getElementById("text");
-    if (checkBox.checked == true){
-        ctract.addTo(mymap);
-    } else {
-        ctract.remove();
-    }
-};	
-
 function myFunction1() {
     var checkBox = document.getElementById("myCheck1");
     var text = document.getElementById("text");
