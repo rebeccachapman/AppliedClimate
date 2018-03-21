@@ -4,7 +4,7 @@
 
 // Retrived data from csv file content
 var url = "http://chapmanrebecca.com/AppliedClimate/HPOM/sample.csv";
-var request = new XMLHttpRequest();  
+var request = new XMLHttpRequest();  //This is deprecated. We need to change this
 request.open("GET", url, false);   
 request.send(null);  
 
@@ -41,15 +41,13 @@ for (var i = 1; i < jsonObject.length; i++) {
 	function style(feature) {
     return {
         fillColor: getColor(feature.properties.power),
-        weight: 0.5,
-        opacity: 1,
-        color: 'black',
-        dashArray: '3',
-        fillOpacity: 0.7
+        weight: 1,
+        opacity: getFill(feature.properties.power),
+        color: getColor(feature.properties.power),
+        //dashArray: '3',
+        fillOpacity: getFill(feature.properties.power)
     };
 };
-
-
 	var ctract = new L.GeoJSON(HOPM, {style: style});
 	// Change color
 	function getColor(d) {
@@ -62,22 +60,36 @@ for (var i = 1; i < jsonObject.length; i++) {
           // d > 10   ? '#FED976' :
                       '#FFEDA0';
 };	
+  function getFill(d) {
+    return d > 2  ? 1 :
+                    0;
+};  
 
 var myStyle = {
 "color": "#007bff",
 "weight": 1.2,
 "opacity": 0.65
 };
+
 // Create hurricane layers
 	var track_forecast = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_5day_015.zip',{style: myStyle});
 	var surge = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_esurge10_2017082400.zip',{style:style});
 // Using external REST services
   var NHC_Atl_trop_cyclones =  L.esri.featureLayer({
     url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/'});
+  var watch_warn_adv = L.esri.dynamicMapLayer({
+    url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/watch_warn_adv/MapServer', layers:[0,1]});
+  //
+  //https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/SPC_wx_outlks/MapServer
+  //var mapLayers = {
+  //  track_forecast, surge, NHC_Atl_trop_cyclones, watch_warn_adv
+  //}; #RC - want to build list of layers to use in map layer listing to reduce # of functions used
 
 
 // Create basemap layers -- basemaps http://leaflet-extras.github.io/leaflet-providers/preview/ 
 	var topo = L.esri.basemapLayer("Topographic");
+  var gray = L.esri.basemapLayer("Gray");
+  var imagery = L.esri.basemapLayer("ImageryClarity");
   //var blkmarble = L.tileLayer("https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_DayNightBand_ENCC/default/2018-02-28/500m/6/13/36.png")
   var blkmarble = L.tileLayer('https://map1.vis.earthdata.nasa.gov/wmts-webmerc/VIIRS_Black_Marble/default/{time}/{tilematrixset}{maxZoom}/{z}/{y}/{x}.{format}', {
   bounds: [[-85.0511287776, -179.999999975], [85.0511287776, 179.999999975]],
@@ -88,6 +100,8 @@ var myStyle = {
   tilematrixset: 'GoogleMapsCompatible_Level'
 });
   var radar = L.esri.dynamicMapLayer({url:'https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/radar_meteo_imagery_nexrad_time/MapServer/', layers:[3]});
+  //https://idpgis.ncep.noaa.gov/arcgis/rest/services/NOS_ESI/ESI_TexasUpperCoast_Maps/ImageServer
+
 
 // Set variable for map and initialize
 	var mymap =  L.map('mapid', {
@@ -98,19 +112,17 @@ var myStyle = {
 
 // Add layers to map
 	topo.addTo(mymap);
-	//ctract.addTo(mymap)
-	
 // Create layer control
 	var baseMaps ={
-	"Topography":topo, 
+	"Topographic":topo, 
     "Black Marble":blkmarble,
+    "Imagery":imagery,
+    "Light Gray":gray,
+    "Radar":radar
 };	
-
-var overlayMaps = {
+  var overlayMaps = {
     "Radar":radar
 };
-
-
     L.control.layers(baseMaps, overlayMaps).addTo(mymap);
 // legend
 	var legend = L.control({position: 'bottomright'});
@@ -169,6 +181,15 @@ function myFunction3() {
     } else {
         NHC_Atl_trop_cyclones.remove();
     }
-};		
+};
 
+function myFunction4() {
+    var checkBox = document.getElementById("myCheck4");
+    var text = document.getElementById("text");
+    if (checkBox.checked == true){
+        watch_warn.addTo(mymap);
+    } else {
+        watch_warn.remove();
+    }
+};    
 
