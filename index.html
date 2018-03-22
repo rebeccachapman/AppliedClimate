@@ -41,18 +41,16 @@
      <input type="checkbox" id="myCheck4"  onclick="myFunction4()"> Watches, Warnings and Advisories
        <br></br>
      <h3>Export Files</h3>
-	  <input type="checkbox" id="EF1"  > Original HOPM Output in (.csv)
+	  <input type="checkbox" id="EF1"  onclick="FunctionEF1()"> Original HOPM Output in (.csv)
 	    <br></br>
-	  <input type="checkbox" id="EF2"  > Merged HOPM Output and Tract ID (.geojson)
+	  <input type="checkbox" id="EF2"  onclick="FunctionEF2()"> Merged HOPM Output and Tract ID (.geojson)
 	    <br></br>
-	  <input type="checkbox" id="EF3"  > Geographic Image (.jpeg)
-	    <br></br>
-	  <button>Export</button>
+      <button onclick="download()">Download</button>
 </div>
      <div id="mapid" style="width: 1000px; height: 600px; margin-left:0px; margin-right:auto"></div> 
 </div>
 <script type="text/javascript"src="index.js"></script>
-
+<script type="text/javascript"src="maprint.js"></script>
 </body>
 </html>
 

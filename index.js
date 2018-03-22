@@ -215,7 +215,6 @@ var myStyle = {
 //********************************************add layer control***************************************************	
 function myFunction1() {
     var checkBox = document.getElementById("myCheck1");
-    var text = document.getElementById("text");
     if (checkBox.checked == true){
         track_forecast.addTo(mymap);
     } else {
@@ -225,7 +224,6 @@ function myFunction1() {
 
 function myFunction2() {
     var checkBox = document.getElementById("myCheck2");
-    var text = document.getElementById("text");
     if (checkBox.checked == true){
         surge.addTo(mymap);
     } else {
@@ -235,7 +233,6 @@ function myFunction2() {
 
 function myFunction3() {
     var checkBox = document.getElementById("myCheck3");
-    var text = document.getElementById("text");
     if (checkBox.checked == true){
         NHC_Atl_trop_cyclones.addTo(mymap);
     } else {
@@ -245,7 +242,6 @@ function myFunction3() {
 
 function myFunction4() {
     var checkBox = document.getElementById("myCheck4");
-    var text = document.getElementById("text");
     if (checkBox.checked == true){
         watch_warn.addTo(mymap);
     } else {
@@ -253,3 +249,63 @@ function myFunction4() {
     }
 };    
 
+//*******************************************download files**********************************************
+function downloadObjectAsCsv(exportObj, exportName){
+
+    var dataUrl = "http://chapmanrebecca.com/AppliedClimate/HPOM/sample.csv";
+    var downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href",     dataUrl);
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+  }
+
+function downloadObjectAsJson(exportObj, exportName){
+
+    var jsonData = new Blob([JSON.stringify(exportObj)], { type: 'application/json' }); 
+    var dataUrl = URL.createObjectURL(jsonData);
+    var downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href",     dataUrl);
+    downloadAnchorNode.setAttribute("download", exportName + ".geojson");
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+  }  
+  
+var flag1 = 0;
+var flag2 = 1;
+var flag3 = 0;
+
+function FunctionEF1() {
+	var checkBox = document.getElementById("EF1");
+    if (checkBox.checked == true){
+        flag1 = 1;
+    } else {
+        flag1 = 0;
+    }    
+};
+
+function FunctionEF2() {
+	var checkBox = document.getElementById("EF2");
+    if (checkBox.checked == true){
+        flag2 = 1;
+    } else {
+        flag2 = 0;
+    }    
+};
+
+function FunctionEF3() {
+	var checkBox = document.getElementById("EF3");
+    if (checkBox.checked == true){
+        flag3 = 1;
+    } else {
+        flag3 = 0;
+    }    
+};
+
+function download() {
+	if (flag1 ===1){
+	downloadObjectAsCsv(csvData, "HOPM");	
+	}
+	if (flag2 ===1){
+	downloadObjectAsJson(HOPM, "HOPM_merged");	
+	}
+};	
