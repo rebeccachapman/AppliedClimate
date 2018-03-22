@@ -12,7 +12,7 @@ var csvData = new Array();
 var jsonObject = request.responseText.split(/\r?\n|\r/);
 for (var i = 0; i < jsonObject.length; i++) {
   csvData.push(jsonObject[i].split(','));
-}
+};
 
 // Read tract ID
 function Get(yourUrl){
@@ -20,11 +20,13 @@ function Get(yourUrl){
     Httpreq.open("GET",yourUrl,false);
     Httpreq.send(null);
     return Httpreq.responseText;          
-}
+};
+
 var HOPM = JSON.parse(Get('http://chapmanrebecca.com/AppliedClimate/HPOM/ctract.geojson'));	
+
 for (var i = 0; i < HOPM.features.length; i++) {
     HOPM.features[i].properties.power = 0;	   
-}
+};
 
 // Merge
 for (var j = 0; j < HOPM.features.length; j++) {
