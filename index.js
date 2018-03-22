@@ -303,7 +303,7 @@ function download() {
 };	
 //*************************************************** print snapshot***************************************
 L.easyPrint({
-	filename:"HOPMmap"	
+	filename:"HOPMmap",	
 	position: 'topleft',
 	sizeModes: ['A4Portrait', 'A4Landscape'],
 	exportOnly: true
