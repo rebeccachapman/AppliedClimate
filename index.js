@@ -292,14 +292,6 @@ function FunctionEF2() {
     }    
 };
 
-function FunctionEF3() {
-	var checkBox = document.getElementById("EF3");
-    if (checkBox.checked == true){
-        flag3 = 1;
-    } else {
-        flag3 = 0;
-    }    
-};
 
 function download() {
 	if (flag1 ===1){
@@ -309,3 +301,5 @@ function download() {
 	downloadObjectAsJson(HOPM, "HOPM_merged");	
 	}
 };	
+//*************************************************** print snapshot***************************************
+L.control.browserPrint().addTo(mymap)
