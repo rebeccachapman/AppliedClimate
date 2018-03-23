@@ -20,6 +20,7 @@
     <script src="https://unpkg.com/shpjs@latest/dist/shp.js"></script>
 	<script src="http://chapmanrebecca.com/AppliedClimate/HPOM/leaflet.shpfile.js"></script>	
 	<link rel="stylesheet" href="styles.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- Load D3 -->
 	<script src="https://d3js.org/d3.v5.js"></script>
   <!-- Load jquery -->
@@ -48,6 +49,12 @@
 	  <input type="checkbox" id="EF2"  onclick="FunctionEF2()"> Merged HOPM Output and Tract ID (.geojson)
 	    <br></br>
       <button onclick="download()">Download</button>
+	 <h3>Search Tract to Show Results</h3>
+	 <form class="example" style="margin:auto;max-width:300px">
+       <input type="text" placeholder="Search.." name="search">
+       <button type="submit"><i class="fa fa-search"></i></button>
+	 </form>  
+</form>
 </div>
      <div id="mapid" style="width: 1000px; height: 600px; margin-left:0px; margin-right:auto"></div> 
 </div>
