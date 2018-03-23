@@ -271,7 +271,7 @@ function downloadObjectAsJson(exportObj, exportName){
   }  
   
 var flag1 = 0;
-var flag2 = 1;
+var flag2 = 0;
 var flag3 = 0;
 
 function FunctionEF1() {
@@ -296,10 +296,10 @@ function FunctionEF2() {
 function download() {
 	if (flag1 ===1){
 	downloadObjectAsCsv(csvData, "HOPM");	
-	}
+	};
 	if (flag2 ===1){
 	downloadObjectAsJson(HOPM, "HOPM_merged");	
-	}
+	};
 };	
 //*************************************************** print snapshot***************************************
 L.easyPrint({
