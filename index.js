@@ -308,3 +308,23 @@ L.easyPrint({
 	sizeModes: ['A4Portrait', 'A4Landscape'],
 	exportOnly: true
 }).addTo(mymap);
+
+//*************************************************** add search function *********************************
+var flag4 = 0;
+function search(){
+	var x = document.getElementById("ID").value;
+	for (var j = 0; j < HOPM.features.length; j++) {
+      if (x===HOPM.features[j].properties.GEOID10) {
+        var pencentile = HOPM.features[j].properties.power;	
+        var population = HOPM.features[j].properties.power;	
+		flag =1;
+        };		
+	
+    };
+	
+	if(flag ===0){
+	alert('No Tract Found');}else
+	{
+    alert('TractID: '+ x+ '\n' +'Percentile of population affected: '+ pencentile +'%');
+	};
+};	
