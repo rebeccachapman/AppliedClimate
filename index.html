@@ -35,13 +35,13 @@
 <div class="container">
 <div id="list"  align="left"  style="width: 370px"> 
      <h3>Map Layers</h3>
-	 <input type="checkbox" id="myCheck1"  onclick="myFunction1()"> Advisory Forecast Track
+	 <input type="checkbox" id="myCheck1"  onclick="addLayerToMap(this, track_forecast)"> Advisory Forecast Track
        <br></br>
-	 <input type="checkbox" id="myCheck2"  onclick="myFunction2()"> Storm Surge Probabilities
+	 <input type="checkbox" id="myCheck2"  onclick="addLayerToMap(this, surge)"> Storm Surge Probabilities
 	   <br></br>
-	 <input type="checkbox" id="myCheck3"  onclick="myFunction3()"> Atlantic/Caribbean Tropical Cyclones
+	 <input type="checkbox" id="myCheck3"  onclick="addLayerToMap(this, NHC_Atl_trop_cyclones)"> Atlantic/Caribbean Tropical Cyclones
        <br></br>
-     <input type="checkbox" id="myCheck4"  onclick="myFunction4()"> Watches, Warnings and Advisories
+     <input type="checkbox" id="myCheck4"  onclick="addLayerToMap(this, watch_warn_adv)"> Watches, Warnings and Advisories
        <br></br>
      <h3>Export Files</h3>
 	  <input type="checkbox" id="EF1"  onclick="FunctionEF1()"> Original HPOM Output (.csv)

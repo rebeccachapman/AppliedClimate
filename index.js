@@ -1,6 +1,6 @@
 
 
-//*************************************merge power outage model output with tract ID *****************************
+//************************************ merge power outage model output with tract ID *****************************
 
 // Retrived data from csv file content
 var url = "http://chapmanrebecca.com/AppliedClimate/HPOM/sample.csv";
@@ -49,7 +49,7 @@ for (var j = 0; j < HOPM.features.length; j++) {
 };
 
 
-//*******************************************Map HOPM output***************************************************************
+//******************************************* Map HOPM output ***************************************************************
 	
 // Set variable for map and initialize
 	var mymap =  L.map('mapid', {
@@ -135,13 +135,13 @@ info.onAdd = function (map) {
 // method that we will use to update the control based on feature properties passed
 info.update = function (props) {
     this._div.innerHTML = '<h4>HPOM Output</h4>' +  (props ?
-        '<b>Tact: ' + props.GEOID10 + '</b><br /> ' + props.power + ' %'
+        '<b>Tract: ' + props.GEOID10 + '</b><br /> ' + props.power + ' %'
         : 'Hover over a census tract');
 };
 
 info.addTo(mymap);	
 	
-//********************************************* add other map layers**********************************************************
+//********************************************* add other map layers **********************************************************
 var myStyle = {
 "color": "#007bff",
 "weight": 1.2,
@@ -179,11 +179,10 @@ var myStyle = {
   var radar = L.esri.dynamicMapLayer({url:'https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/radar_meteo_imagery_nexrad_time/MapServer/', layers:[3]});
   //https://idpgis.ncep.noaa.gov/arcgis/rest/services/NOS_ESI/ESI_TexasUpperCoast_Maps/ImageServer
 
-
-
-// Add layers to map
+// Initialize map with the topo basemap
 	topo.addTo(mymap);
-// Create layer control
+
+// Create layer controls to change basemaps
 	var baseMaps ={
 	"Topographic":topo, 
     "Black Marble":blkmarble,
@@ -194,7 +193,9 @@ var myStyle = {
     "Radar":radar
 };
     L.control.layers(baseMaps, overlayMaps).addTo(mymap);
-// 
+
+
+//*************************************** Legend ************************************
 	var legend = L.control({position: 'bottomright'});
     legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'info legend'),
@@ -211,47 +212,17 @@ var myStyle = {
 	legend.addTo(mymap);
 	
 
-	
-//********************************************add layer control***************************************************	
-function myFunction1() {
-    var checkBox = document.getElementById("myCheck1");
-    if (checkBox.checked == true){
-        track_forecast.addTo(mymap);
+//********************************** Function used to add and remove layers via a checkbox ***********************************	
+function addLayerToMap(element, layer) {
+    if (element.checked){
+        layer.addTo(mymap);
     } else {
-        track_forecast.remove();
-    }
-};	
-
-function myFunction2() {
-    var checkBox = document.getElementById("myCheck2");
-    if (checkBox.checked == true){
-        surge.addTo(mymap);
-    } else {
-        surge.remove();
-    }
-};			
-
-function myFunction3() {
-    var checkBox = document.getElementById("myCheck3");
-    if (checkBox.checked == true){
-        NHC_Atl_trop_cyclones.addTo(mymap);
-    } else {
-        NHC_Atl_trop_cyclones.remove();
+        layer.remove();
     }
 };
 
-function myFunction4() {
-    var checkBox = document.getElementById("myCheck4");
-    if (checkBox.checked == true){
-        watch_warn.addTo(mymap);
-    } else {
-        watch_warn.remove();
-    }
-};    
-
-//*******************************************download files**********************************************
+//******************************************* download files **********************************************
 function downloadObjectAsCsv(exportObj, exportName){
-
     var dataUrl = "http://chapmanrebecca.com/AppliedClimate/HPOM/sample.csv";
     var downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute("href",     dataUrl);
@@ -260,7 +231,6 @@ function downloadObjectAsCsv(exportObj, exportName){
   }
 
 function downloadObjectAsJson(exportObj, exportName){
-
     var jsonData = new Blob([JSON.stringify(exportObj)], { type: 'application/json' }); 
     var dataUrl = URL.createObjectURL(jsonData);
     var downloadAnchorNode = document.createElement('a');
@@ -292,7 +262,6 @@ function FunctionEF2() {
     }    
 };
 
-
 function download() {
 	if (flag1 ===1){
 	downloadObjectAsCsv(csvData, "HOPM");	
@@ -301,7 +270,7 @@ function download() {
 	downloadObjectAsJson(HOPM, "HOPM_merged");	
 	};
 };	
-//*************************************************** print snapshot***************************************
+//*************************************************** print snapshot ***************************************
 L.easyPrint({
 	filename:"HOPMmap",	
 	position: 'topleft',
@@ -315,16 +284,15 @@ function search(){
 	var x = document.getElementById("ID").value;
 	for (var j = 0; j < HOPM.features.length; j++) {
       if (x===HOPM.features[j].properties.GEOID10) {
-        var pencentile = HOPM.features[j].properties.power;	
+        var percentile = HOPM.features[j].properties.power;	
         var population = HOPM.features[j].properties.power;	
 		flag =1;
         };		
-	
     };
 	
 	if(flag ===0){
 	alert('No Tract Found');}else
 	{
-    alert('TractID: '+ x+ '\n' +'Percentile of population affected: '+ pencentile +'%');
+    alert('TractID: '+ x+ '\n' +'Percentile of population affected: '+ percentile +'%');
 	};
 };	
