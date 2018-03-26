@@ -158,6 +158,19 @@ var myStyle = {
     url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/watch_warn_adv/MapServer', layers:[0,1]});
   //
   //https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/SPC_wx_outlks/MapServer
+  // var hist_hurr_county = 
+//https://coast.noaa.gov/arcgis/rest/services/Hurricanes/CountyStrikes/MapServer
+// this is tiled
+//CountyStrikes layer color coded to represent the amount of hurricane strikes as compared with population
+
+  // var =
+  // https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/wwa_meteocean_tropicalcyclones_inundation/MapServer
+  //Potential Storm Surge Flooding Map
+
+  // var best_track_fcst =
+  // https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/wwa_meteocean_tropicalcyclones_trackintensityfcsts_time/MapServer
+  //Watches, Warnings, and Track/Intensity Forecasts
+
   //var mapLayers = {
   //  track_forecast, surge, NHC_Atl_trop_cyclones, watch_warn_adv
   //}; #RC - want to build list of layers to use in map layer listing to reduce # of functions used
@@ -177,6 +190,7 @@ var myStyle = {
   tilematrixset: 'GoogleMapsCompatible_Level'
 });
   var radar = L.esri.dynamicMapLayer({url:'https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/radar_meteo_imagery_nexrad_time/MapServer/', layers:[3]});
+  // need to include info button that links to metadata https://nowcoast.noaa.gov/metadata/radar_meteo_imagery_nexrad_time.xml
   //https://idpgis.ncep.noaa.gov/arcgis/rest/services/NOS_ESI/ESI_TexasUpperCoast_Maps/ImageServer
 
 // Initialize map with the topo basemap
