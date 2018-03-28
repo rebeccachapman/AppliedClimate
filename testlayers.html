@@ -43,17 +43,21 @@
   
   //https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/SPC_wx_outlks/MapServer
   // var hist_hurr_county = 
-//https://coast.noaa.gov/arcgis/rest/services/Hurricanes/CountyStrikes/MapServer
+
+
 // this is tiled
 //CountyStrikes layer color coded to represent the amount of hurricane strikes as compared with population
+//var county_strikes = L.esri.TiledMapLayer({url:'https://coast.noaa.gov/arcgis/rest/services/Hurricanes/CountyStrikes/MapServer'});
+ //county_strikes.addTo(mymap)
 
-  // var =
-  // https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/wwa_meteocean_tropicalcyclones_inundation/MapServer
-  //Potential Storm Surge Flooding Map
+//Potential Storm Surge Flooding Map
+ 	var storm_surge = L.esri.dynamicMapLayer({url:'https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/wwa_meteocean_tropicalcyclones_inundation/MapServer'});
+ 	storm_surge.addTo(mymap)
 
-  // var best_track_fcst =
-  // https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/wwa_meteocean_tropicalcyclones_trackintensityfcsts_time/MapServer
-  //Watches, Warnings, and Track/Intensity Forecasts
+ //Watches, Warnings, and Track/Intensity Forecasts
+	var best_track_fcst = L.esri.dynamicMapLayer({url:'https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/wwa_meteocean_tropicalcyclones_trackintensityfcsts_time/MapServer'});
+ 	best_track_fcst.addTo(mymap)
+  
 
 </script>
 </body>
