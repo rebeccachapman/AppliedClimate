@@ -158,24 +158,23 @@ var myStyle = {
     url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/'});
   var watch_warn_adv = L.esri.dynamicMapLayer({
     url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/watch_warn_adv/MapServer', layers:[0,1]});
-  //
+  //Potential Storm Surge Flooding Map
+  var storm_surge = L.esri.dynamicMapLayer({
+    url:'https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/wwa_meteocean_tropicalcyclones_inundation/MapServer'});
+ //Watches, Warnings, and Track/Intensity Forecasts
+  var best_track_fcst = L.esri.dynamicMapLayer({
+    url:'https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/wwa_meteocean_tropicalcyclones_trackintensityfcsts_time/MapServer'});
   //https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/SPC_wx_outlks/MapServer
   // var hist_hurr_county = 
 //https://coast.noaa.gov/arcgis/rest/services/Hurricanes/CountyStrikes/MapServer
 // this is tiled
 //CountyStrikes layer color coded to represent the amount of hurricane strikes as compared with population
 
-  // var =
-  // https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/wwa_meteocean_tropicalcyclones_inundation/MapServer
-  //Potential Storm Surge Flooding Map
-
-  // var best_track_fcst =
-  // https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/wwa_meteocean_tropicalcyclones_trackintensityfcsts_time/MapServer
-  //Watches, Warnings, and Track/Intensity Forecasts
-
   //var mapLayers = {
   //  track_forecast, surge, NHC_Atl_trop_cyclones, watch_warn_adv
   //}; #RC - want to build list of layers to use in map layer listing to reduce # of functions used
+
+
 
 
 // Create basemap layers -- basemaps http://leaflet-extras.github.io/leaflet-providers/preview/ 
