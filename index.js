@@ -1,6 +1,6 @@
 
 
-//************************************ merge power outage model output with tract ID *****************************
+//************************************ Merge power outage model output with tract ID *****************************
 
 // Retrived data from csv file content
 var url = "http://chapmanrebecca.com/AppliedClimate/HPOM/sample.csv";
@@ -25,7 +25,8 @@ function Get(yourUrl){
 var HOPM = JSON.parse(Get('http://chapmanrebecca.com/AppliedClimate/HPOM/ctract.geojson'));	
 
 for (var i = 0; i < HOPM.features.length; i++) {
-    HOPM.features[i].properties.power = 0;	   
+    HOPM.features[i].properties.power = 0;
+    HOPM.features[i].properties.people = 0;	
 };
 
 // Merge
@@ -34,7 +35,8 @@ for (var j = 0; j < HOPM.features.length; j++) {
 	for (var i = 1; i < jsonObject.length; i++) {
 		result= csvData[i];
         if (result[0]===HOPM.features[j].properties.GEOID10) {
-        HOPM.features[j].properties.power = (result[16]*100).toFixed(2);	
+        HOPM.features[j].properties.power = (result[16]*100).toFixed(0);	
+		HOPM.features[j].properties.people = (result[16]*result[1]).toFixed(0);
 		flag =1;
         }		
     }
@@ -49,7 +51,7 @@ for (var j = 0; j < HOPM.features.length; j++) {
 };
 
 
-//******************************************* Map HOPM output ***************************************************************
+//*******************************************Map HOPM output ***************************************************************
 	
 // Set variable for map and initialize
 	var mymap =  L.map('mapid', {
@@ -117,8 +119,8 @@ function onEachFeature(feature, layer) {
     });
 };
 	
-	L.geoJson(HOPM, {style: style}).addTo(mymap);
-	geojson = L.geoJson(HOPM, {
+L.geoJson(HOPM, {style: style}).addTo(mymap);
+geojson = L.geoJson(HOPM, {
     style: style,
     onEachFeature: onEachFeature
 }).addTo(mymap);
@@ -135,13 +137,13 @@ info.onAdd = function (map) {
 // method that we will use to update the control based on feature properties passed
 info.update = function (props) {
     this._div.innerHTML = '<h4>HPOM Output</h4>' +  (props ?
-        '<b>Tract: ' + props.GEOID10 + '</b><br /> ' + props.power + ' %'
+        '<b>Tract: ' + props.GEOID10 + '</b><br /> Population Affected: '+ props.people+ '</b><br /> Percentage: '+ props.power + ' %'
         : 'Hover over a census tract');
 };
 
 info.addTo(mymap);	
 	
-//********************************************* add other map layers **********************************************************
+//********************************************* Add other map layers **********************************************************
 var myStyle = {
 "color": "#007bff",
 "weight": 1.2,
@@ -209,7 +211,7 @@ var myStyle = {
     L.control.layers(baseMaps, overlayMaps).addTo(mymap);
 
 
-//*************************************** Legend ************************************
+//*********************************************************** Legend *********************************************************
 	var legend = L.control({position: 'bottomright'});
     legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'info legend'),
@@ -235,7 +237,7 @@ function addLayerToMap(element, layer) {
     }
 };
 
-//******************************************* download files **********************************************
+//*************************************************** Download files *********************************************************
 function downloadObjectAsCsv(exportObj, exportName){
     var dataUrl = "http://chapmanrebecca.com/AppliedClimate/HPOM/sample.csv";
     var downloadAnchorNode = document.createElement('a');
