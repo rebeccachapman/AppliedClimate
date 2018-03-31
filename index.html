@@ -35,9 +35,14 @@
 <div class="container">
 <div id="list"  align="left"  style="width: 370px"> 
      <h3>Map Layers</h3>
-	 <input type="checkbox" id="myCheck1"  onclick="addLayerToMap(this, track_forecast)"> Advisory Forecast Track
+	 <select>
+        <option value="current">Current Storm</option>
+        <option value="sample">Sample Case</option>
+     </select>
+	 <br></br>
+	 <input type="checkbox" id="myCheck1"  onclick="addLayerToMap(this, track_forecast)"> Forecast Track and Cone
        <br></br>
-	 <input type="checkbox" id="myCheck2"  onclick="addLayerToMap(this, surge)"> Storm Surge Probabilities
+	 <input type="checkbox" id="myCheck2"  onclick="addLayerToMap(this, surge)"> Watches and Warnings
 	   <br></br>
 	 <input type="checkbox" id="myCheck3"  onclick="addLayerToMap(this, NHC_Atl_trop_cyclones)"> Atlantic/Caribbean Tropical Cyclones
        <br></br>
