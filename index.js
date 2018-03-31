@@ -149,13 +149,18 @@ var myStyle = {
 "weight": 1.2,
 "opacity": 0.65
 };
+var myStyle1 = {
+"color": "#007bff",
+"weight": 2.0,
+};
 
 // Create hurricane layers
 	var track_forecast = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_5day_015.zip',{style: myStyle});
+	var watch_warning  = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017-015_ww_wwlin.zip',{style: myStyle1});
 	var surge = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_esurge10_2017082400.zip',{style:style});
 // Using external REST services
-  var NHC_Atl_trop_cyclones =  L.esri.featureLayer({
-    url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/'});
+  //var NHC_Atl_trop_cyclones =  L.esri.featureLayer({
+  //  url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/'});
   var watch_warn_adv = L.esri.dynamicMapLayer({
     url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/watch_warn_adv/MapServer', layers:[0,1]});
   //Potential Storm Surge Flooding Map
