@@ -154,18 +154,20 @@ var myStyle1 = {
 "weight": 2.0,
 };
 
-// Create hurricane layers
+// sample hurricane layers
 	var track_forecast = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_5day_015.zip',{style: myStyle});
 	var watch_warning  = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017-015_ww_wwlin.zip',{style: myStyle1});
-	var surge = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_esurge10_2017082400.zip',{style:style});
+	var surge = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/AL0917_15_tidalmask.zip',{style: myStyle});
 // Using external REST services
-  //var NHC_Atl_trop_cyclones =  L.esri.featureLayer({
-  //  url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/'});
-  var watch_warn_adv = L.esri.dynamicMapLayer({
-    url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/watch_warn_adv/MapServer', layers:[0,1]});
-  //Potential Storm Surge Flooding Map
-  var storm_surge = L.esri.dynamicMapLayer({
-    url:'https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/wwa_meteocean_tropicalcyclones_inundation/MapServer'});
+    
+    var track_forecast_api = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[5,6]});
+  //var watch_warn_adv = L.esri.dynamicMapLayer({
+  //url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/watch_warn_adv/MapServer', layers:[0,1]});
+ 
+ //Potential Storm Surge Flooding Map
+  //var storm_surge = L.esri.dynamicMapLayer({
+  //url:'https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/wwa_meteocean_tropicalcyclones_inundation/MapServer'});
+ 
  //Watches, Warnings, and Track/Intensity Forecasts
   var best_track_fcst = L.esri.dynamicMapLayer({
     url:'https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/wwa_meteocean_tropicalcyclones_trackintensityfcsts_time/MapServer'});
@@ -316,3 +318,9 @@ function search(){
     alert('TractID: '+ x+ '\n' +'Percentile of population affected: '+ percentile +'%');
 	};
 };	
+//***************************************************add popup************************************************
+
+function popup(id) {
+    var popup = document.getElementById(id);
+    popup.classList.toggle("show");
+}
