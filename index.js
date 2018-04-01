@@ -214,6 +214,7 @@ function getLayer(value){
     track_forecast.remove();
 	watch_warning.remove();
 	Psurge.remove();
+	Pwind34.remove();
 	document.getElementById("myCheck1").checked = false;
 	document.getElementById("myCheck2").checked = false;
 	document.getElementById("myCheck3").checked = false;
@@ -229,6 +230,7 @@ if(value=="sample"){
     track_forecast = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[5,6,16,17,27,28,38,39,49,50]});
 	watch_warning  = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[7,18,29,40,51]});
 	Psurge = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[14,25,36,46,58]});
+	Pwind34 = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[59]});
 	};	
 	
 };	

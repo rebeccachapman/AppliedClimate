@@ -32,23 +32,25 @@
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-
 }
 
 /* The actual popup */
 .popup .popuptext {
     visibility: hidden;
     width: 300px;
-    background-color: #555;
+    background-color: #666699;
     color: #fff;
     text-align:center;
     border-radius: 6px;
-    padding: 8px 0;
+    padding: 8px 8px;
     position: absolute;
     z-index: 50;
     bottom: 125%;
     left: 50%;
     margin-left: -80px;
+	-moz-box-shadow:    0px 1px 2px 2px #ccc;
+    -webkit-box-shadow: 0px 1px 2px 2px #ccc;
+    box-shadow:         0px 1px 2px 2px #ccc;
 }
 
 /* Popup arrow */
@@ -60,8 +62,9 @@
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: #555 transparent transparent transparent;
+    border-color: #666699 transparent transparent transparent;
 	z-index: 50;
+
 }
 
 /* Toggle this class - hide and show the popup */
