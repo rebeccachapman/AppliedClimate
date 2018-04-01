@@ -61,6 +61,7 @@ for (var j = 0; j < HOPM.features.length; j++) {
 
 	
 	function style(feature) {
+
     return {
         fillColor: getColor(feature.properties.power),
         weight: 1,
@@ -173,10 +174,39 @@ function getsurgeColor(d) {
                      '#e6e6ff';
 };	
 
+function myStyle4(feature) {
+    return {
+        fillColor: getwindColor(feature.properties.PERCENTAGE),
+        weight: 0,
+        color: getwindColor(feature.properties.PERCENTAGE),
+        fillOpacity: 0.8
+    };
+};
+function getwindColor(d) {
+    return d > 90  ?  '#5e35b1' :
+	       d > 80  ?  '#8e24aa' :
+	       d > 70  ?  '#d81b60' :
+	       d > 60  ?  '#e53935' :
+           d > 50  ?  '#f4511e' :
+           d > 40  ?  '#fb8c00' :
+           d > 30  ?  '#ffb300' :
+           d > 20  ?  '#fdd835' :
+           d > 10  ?  '#c0ca33' :
+                      '#7cb342';
+};	
+
+
+
+
+
+
+
+
+
 var track_forecast = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[5,6,16,17,27,28,38,39,49,50]});
 var watch_warning  = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[7,18,29,40,51]});
 var Psurge = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[14,25,36,46,58]});
-	
+var Pwind34= L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[59]});	
 
 function getLayer(value){   
     track_forecast.remove();
@@ -191,12 +221,14 @@ if(value=="sample"){
 	track_forecast = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_5day_015.zip',{style: myStyle1});
 	watch_warning  = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017-015_ww_wwlin.zip',{style: myStyle2});
 	Psurge = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_esurge10_2017082400.zip',{style: myStyle3});
+	Pwind34 = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/2017082400_wsp_120hr5km34.zip',{style: myStyle4});
 	}else{
     // Using external REST services
     track_forecast = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[5,6,16,17,27,28,38,39,49,50]});
 	watch_warning  = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[7,18,29,40,51]});
 	Psurge = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[14,25,36,46,58]});
-	};	
+	Pwind34= L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[59]});	
+	;	
 	
 };	
 
