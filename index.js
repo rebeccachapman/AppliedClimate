@@ -143,37 +143,64 @@ info.update = function (props) {
 
 info.addTo(mymap);	
 	
-//********************************************* Add other map layers **********************************************************
-var myStyle = {
+//********************************************* Add hurricane map layers **********************************************************
+var myStyle1 = {
 "color": "#007bff",
 "weight": 1.2,
 "opacity": 0.65
 };
-var myStyle1 = {
+var myStyle2 = {
 "color": "#0000ff",
 "weight": 2.5,
 };
 
-var track_forecast = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[5,6,16,17,27,28,38,39,49,50]});
-var watch_warning  = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017-015_ww_wwlin.zip',{style: myStyle1});
-var surge = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/AL0917_15_tidalmask.zip',{style: myStyle});
+function myStyle3(feature) {
+    return {
+        fillColor: getsurgeColor(feature.properties.SURGE10),
+        weight: 0,
+        color: getsurgeColor(feature.properties.SURGE10),
+        fillOpacity: 0.8
+    };
+};
 
+function getsurgeColor(d) {
+    return d > 6  ?  '#000080' :
+           d > 5  ?  '#0000cc' :
+           d > 4  ?  '#1a1aff' :
+           d > 3  ?  '#4d4dff' :
+           d > 2  ?  '#8080ff' :
+           d > 1  ?  '#b3b3ff' :
+                     '#e6e6ff';
+};	
+
+var track_forecast = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[5,6,16,17,27,28,38,39,49,50]});
+var watch_warning  = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[7,18,29,40,51]});
+var Psurge = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[14,25,36,46,58]});
+	
 
 function getLayer(value){   
+    track_forecast.remove();
+	watch_warning.remove();
+	Psurge.remove();
+	document.getElementById("myCheck1").checked = false;
+	document.getElementById("myCheck2").checked = false;
+	document.getElementById("myCheck3").checked = false;
+	document.getElementById("myCheck4").checked = false;
 if(value=="sample"){
 	// sample hurricane layers: 2017 Harvey #15
-	track_forecast = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_5day_015.zip',{style: myStyle});
-	watch_warning  = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017-015_ww_wwlin.zip',{style: myStyle1});
-	surge = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/AL0917_15_tidalmask.zip',{style: myStyle});
+	track_forecast = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_5day_015.zip',{style: myStyle1});
+	watch_warning  = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017-015_ww_wwlin.zip',{style: myStyle2});
+	Psurge = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_esurge10_2017082400.zip',{style: myStyle3});
 	}else{
     // Using external REST services
     track_forecast = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[5,6,16,17,27,28,38,39,49,50]});
+	watch_warning  = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[7,18,29,40,51]});
+	Psurge = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[14,25,36,46,58]});
 	};	
 	
 };	
 
-
-    
+//************************************************Backup data layers*****************************************************************************
     
   //var watch_warn_adv = L.esri.dynamicMapLayer({
   //url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/watch_warn_adv/MapServer', layers:[0,1]});
@@ -195,8 +222,7 @@ if(value=="sample"){
   //  track_forecast, surge, NHC_Atl_trop_cyclones, watch_warn_adv
   //}; #RC - want to build list of layers to use in map layer listing to reduce # of functions used
 
-
-
+//***************************************************Add base map layers*****************************************************************************************
 
 // Create basemap layers -- basemaps http://leaflet-extras.github.io/leaflet-providers/preview/ 
   var topo = L.esri.basemapLayer("Topographic");
