@@ -150,17 +150,31 @@ var myStyle = {
 "opacity": 0.65
 };
 var myStyle1 = {
-"color": "#007bff",
-"weight": 2.0,
+"color": "#0000ff",
+"weight": 2.5,
 };
 
-// sample hurricane layers
-	var track_forecast = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_5day_015.zip',{style: myStyle});
-	var watch_warning  = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017-015_ww_wwlin.zip',{style: myStyle1});
-	var surge = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/AL0917_15_tidalmask.zip',{style: myStyle});
-// Using external REST services
+var track_forecast = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[5,6,16,17,27,28,38,39,49,50]});
+var watch_warning  = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017-015_ww_wwlin.zip',{style: myStyle1});
+var surge = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/AL0917_15_tidalmask.zip',{style: myStyle});
+
+
+function getLayer(value){   
+if(value=="sample"){
+	// sample hurricane layers: 2017 Harvey #15
+	track_forecast = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_5day_015.zip',{style: myStyle});
+	watch_warning  = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017-015_ww_wwlin.zip',{style: myStyle1});
+	surge = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/AL0917_15_tidalmask.zip',{style: myStyle});
+	}else{
+    // Using external REST services
+    track_forecast = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[5,6,16,17,27,28,38,39,49,50]});
+	};	
+	
+};	
+
+
     
-    var track_forecast_api = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[5,6]});
+    
   //var watch_warn_adv = L.esri.dynamicMapLayer({
   //url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/watch_warn_adv/MapServer', layers:[0,1]});
  
@@ -264,7 +278,6 @@ function downloadObjectAsJson(exportObj, exportName){
   
 var flag1 = 0;
 var flag2 = 0;
-var flag3 = 0;
 
 function FunctionEF1() {
 	var checkBox = document.getElementById("EF1");
@@ -301,13 +314,13 @@ L.easyPrint({
 }).addTo(mymap);
 
 //*************************************************** add search function *********************************
-var flag4 = 0;
+
 function search(){
 	var x = document.getElementById("ID").value;
 	for (var j = 0; j < HOPM.features.length; j++) {
       if (x===HOPM.features[j].properties.GEOID10) {
-        var percentile = HOPM.features[j].properties.power;	
-        var population = HOPM.features[j].properties.power;	
+        var percentage = HOPM.features[j].properties.power;	
+        var population = HOPM.features[j].properties.people;	
 		flag =1;
         };		
     };
@@ -315,7 +328,7 @@ function search(){
 	if(flag ===0){
 	alert('No Tract Found');}else
 	{
-    alert('TractID: '+ x+ '\n' +'Percentile of population affected: '+ percentile +'%');
+    alert('TractID: '+ x+ '\n' + 'Population affected: ' + population +'\n'+'Percentage: '+ percentage +'%');
 	};
 };	
 //***************************************************add popup************************************************

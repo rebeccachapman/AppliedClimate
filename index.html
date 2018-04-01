@@ -35,19 +35,19 @@
 <div class="container">
 <div id="list"  align="left"  style="width: 370px" > 
      <h3>Map Layers</h3>
-	 <select>
+	 <select id="mySelect" onchange="getLayer(this.options[this.selectedIndex].value)">
         <option value="current">Current Storm</option>
         <option value="sample">Sample Case</option>
      </select>
 	 <br></br>
 	 <input type="checkbox" id="myCheck1"  onclick="addLayerToMap(this, track_forecast)"> Forecast Track and Cone 
 	 <div class="popup" onclick="popup('myPopup1')"> &#9888
-          <span class="popuptext" id="myPopup1">The cone represents the probable track of the center of a tropical cyclone, and is formed by enclosing the area swept out by a set of circles (not shown) along the forecast track (at 12, 24, 36,48, 72, 96, 120 hours). </span>
+          <span class="popuptext" id="myPopup1">The cone represents the probable track of the center of a tropical cyclone, and is formed by enclosing the area swept out by a set of circles (not shown) along the forecast track (at 12, 24, 36, 48, 72, 96, 120 hours). </span>
      </div>
        <br></br>
 	 <input type="checkbox" id="myCheck2"  onclick="addLayerToMap(this, watch_warning)"> Watches and Warnings
 	 <div class="popup" onclick="popup('myPopup2')"> &#9888
-          <span class="popuptext" id="myPopup2">A Simple Popup!</span>
+          <span class="popuptext" id="myPopup2">Coastal areas placed under tropical cyclone watches or warnings are delimited by specific geographical locations known as "breakpoints". This layer consists of one or more lines connecting the breakpoints delimiting any current watches or warnings.</span>
      </div>
 	   <br></br>
      <input type="checkbox" id="myCheck5"  onclick="addLayerToMap(this, track_forecast_api)"> Storm Surge
@@ -59,7 +59,8 @@
 	 <div class="popup" onclick="popup('myPopup4')"> &#9888
           <span class="popuptext" id="myPopup4">A Simple Popup!</span>
      </div>
-       <br></br>
+	 <p><a href="https://www.nhc.noaa.gov/gis/">View meta data</a></p>
+     <br></br>	 
      <h3>Export Files</h3>
 	  <input type="checkbox" id="EF1"  onclick="FunctionEF1()"> Original HPOM Output (.csv)
 	    <br></br>
@@ -68,7 +69,8 @@
       <button onclick="download()">Download</button>
 	 <h3>Search Tract to Show Results</h3>
 	  <input id="ID" type="text" placeholder="Search.." name="search">
-      <button type="button" onclick="search()" ><i class="fa fa-search"></i></button>	
+      <button type="button" onclick="search()" ><i class="fa fa-search"></i></button>
+        
 </div>
      <div id="mapid" style="width: 1000px; height: 600px; margin-left:0px; margin-right:auto; position:relative; z-index: 1 "></div> 
 </div>
