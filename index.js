@@ -21,28 +21,28 @@ function Get(yourUrl){
     return Httpreq.responseText;          
 };
 
-var HOPM = JSON.parse(Get('http://chapmanrebecca.com/AppliedClimate/HPOM/ctract.geojson'));	
+var HPOM = JSON.parse(Get('http://chapmanrebecca.com/AppliedClimate/HPOM/ctract.geojson'));	
 
-for (var i = 0; i < HOPM.features.length; i++) {
-    HOPM.features[i].properties.power = 0;
-    HOPM.features[i].properties.people = 0;	
+for (var i = 0; i < HPOM.features.length; i++) {
+    HPOM.features[i].properties.power = 0;
+    HPOM.features[i].properties.people = 0;	
 };
 
 // Merge
-for (var j = 0; j < HOPM.features.length; j++) {
+for (var j = 0; j < HPOM.features.length; j++) {
     var flag = 0;
 	for (var i = 1; i < jsonObject.length; i++) {
 		result= csvData[i];
-        if (result[0]===HOPM.features[j].properties.GEOID10) {
-        HOPM.features[j].properties.power = (result[16]*100).toFixed(0);	
-		HOPM.features[j].properties.people = (result[16]*result[1]).toFixed(0);
+        if (result[0]===HPOM.features[j].properties.GEOID10) {
+        HPOM.features[j].properties.power = (result[16]*100).toFixed(0);	
+		HPOM.features[j].properties.people = (result[16]*result[1]).toFixed(0);
 		flag =1;
         }		
     }
 	
 	if(flag === 0){	
-	   delete HOPM.features[j];
-	   HOPM.features = HOPM.features.filter(function( element ) {
+	   delete HPOM.features[j];
+	   HPOM.features = HPOM.features.filter(function( element ) {
                return element !== undefined;
        });
 	   j--;
@@ -50,7 +50,7 @@ for (var j = 0; j < HOPM.features.length; j++) {
 };
 
 
-//***************************************************Map HOPM output **************************************************************************************************************
+//***************************************************Map HPOM output **************************************************************************************************************
 	
 // Set variable for map and initialize
 	var mymap =  L.map('mapid', {
@@ -139,14 +139,14 @@ function onEachFeature2(feature, layer) {
     });
 };
 	
-LHPOM   = L.geoJson(HOPM, {style: style}).addTo(mymap);
-LHPOM2  = L.geoJson(HOPM, {style: style2});
+LHPOM   = L.geoJson(HPOM, {style: style}).addTo(mymap);
+LHPOM2  = L.geoJson(HPOM, {style: style2});
 
-geojson = L.geoJson(HOPM, {
+geojson = L.geoJson(HPOM, {
     style: style,
     onEachFeature: onEachFeature
 }).addTo(mymap);
-geojson2 = L.geoJson(HOPM, {
+geojson2 = L.geoJson(HPOM, {
     style: style2,
     onEachFeature: onEachFeature2
 });	
@@ -497,28 +497,28 @@ function FunctionEF2() {
 
 function download() {
 	if (flag1 ===1){
-	downloadObjectAsCsv(csvData, "HOPM");	
+	downloadObjectAsCsv(csvData, "HPOM");	
 	};
 	if (flag2 ===1){
-	downloadObjectAsJson(HOPM, "HOPM_merged");	
+	downloadObjectAsJson(HPOM, "HPOM_merged");	
 	};
 };	
 //************************************************************** print snapshot **********************************************************
 L.easyPrint({
-	filename:"HOPMmap",	
+	filename:"HPOMmap",	
 	position: 'topleft',
 	sizeModes: ['A4Portrait', 'A4Landscape'],
 	exportOnly: true
 }).addTo(mymap);
 
 //************************************************************* add search function ******************************************************
-
 function search(){
 	var x = document.getElementById("ID").value;
-	for (var j = 0; j < HOPM.features.length; j++) {
-      if (x===HOPM.features[j].properties.GEOID10) {
-        var percentage = HOPM.features[j].properties.power;	
-        var population = HOPM.features[j].properties.people;	
+	for (var j = 0; j < HPOM.features.length; j++) {
+      if (x===HPOM.features[j].properties.GEOID10) {
+        var percentage = HPOM.features[j].properties.power;	
+        var population = HPOM.features[j].properties.people;
+        var Lfeature   = L.geoJson(HPOM.features[j]);		
 		flag =1;
         };		
     };
@@ -526,6 +526,7 @@ function search(){
 	if(flag ===0){
 	alert('No Tract Found');}else
 	{
+	mymap.fitBounds(Lfeature.getBounds());
     alert('TractID: '+ x+ '\n' + 'Population affected: ' + population +'\n'+'Percentage: '+ percentage +'%');
 	};
 };	
