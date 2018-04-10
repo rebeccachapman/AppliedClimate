@@ -58,7 +58,7 @@ for (var j = 0; j < HOPM.features.length; j++) {
     zoom: 7.5,
 });
 
-	function style(feature) {
+function style(feature) {
     return {
         fillColor: getColor(feature.properties.power),
         weight: 1,
@@ -170,13 +170,14 @@ info.addTo(mymap);
 	
 //********************************************* Add hurricane map layers **********************************************************************************************************
 var myStyle1 = {
-"color": "#007bff",
-"weight": 1.2,
-"opacity": 0.65
+"color": "#0000ff",
+"fillColor":"#99ccff",
+"weight": 2.5,
+"fillOpacity": 0.4
 };
 var myStyle2 = {
-"color": "#0000ff",
-"weight": 2.5,
+"color": "#00ff00",
+"weight": 3,
 };
 
 function myStyle3(feature) {
