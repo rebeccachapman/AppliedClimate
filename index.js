@@ -1,6 +1,5 @@
 
-
-//************************************ Merge power outage model output with tract ID *****************************
+//************************************ Merge power outage model output with tract ID **********************************************************************************************
 
 // Retrived data from csv file content
 var url = "http://chapmanrebecca.com/AppliedClimate/HPOM/sample.csv";
@@ -51,23 +50,30 @@ for (var j = 0; j < HOPM.features.length; j++) {
 };
 
 
-//*******************************************Map HOPM output ***************************************************************
+//***************************************************Map HOPM output **************************************************************************************************************
 	
 // Set variable for map and initialize
 	var mymap =  L.map('mapid', {
-    center: [28.8, -97.2],
+    center: [28.3, -97.2],
     zoom: 7.5,
 });
 
-	
 	function style(feature) {
     return {
         fillColor: getColor(feature.properties.power),
         weight: 1,
         opacity:1,
         color: getColor(feature.properties.power),
-        //dashArray: '3',
         fillOpacity: 0.5
+    };
+};
+function style2(feature) {
+    return {
+        fillColor: false,
+		fillOpacity:0,
+        weight: 0.5,
+        opacity:1,
+        color: 'black'
     };
 };
 
@@ -118,13 +124,32 @@ function onEachFeature(feature, layer) {
         click: zoomToFeature
     });
 };
+
+
+function resetHighlight2(e) {
+    geojson2.setStyle(style2);
+	info.update();
+};
+
+function onEachFeature2(feature, layer) {
+    layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight2,
+        click: zoomToFeature
+    });
+};
 	
-L.geoJson(HOPM, {style: style}).addTo(mymap);
+LHPOM   = L.geoJson(HOPM, {style: style}).addTo(mymap);
+LHPOM2  = L.geoJson(HOPM, {style: style2});
+
 geojson = L.geoJson(HOPM, {
     style: style,
     onEachFeature: onEachFeature
 }).addTo(mymap);
-	
+geojson2 = L.geoJson(HOPM, {
+    style: style2,
+    onEachFeature: onEachFeature2
+});	
 // add info control
 var info = L.control();
 
@@ -143,7 +168,7 @@ info.update = function (props) {
 
 info.addTo(mymap);	
 	
-//********************************************* Add hurricane map layers **********************************************************
+//********************************************* Add hurricane map layers **********************************************************************************************************
 var myStyle1 = {
 "color": "#007bff",
 "weight": 1.2,
@@ -159,7 +184,7 @@ function myStyle3(feature) {
         fillColor: getsurgeColor(feature.properties.SURGE10),
         weight: 0,
         color: getsurgeColor(feature.properties.SURGE10),
-        fillOpacity: 0.8
+        fillOpacity: 0.86
     };
 };
 
@@ -178,93 +203,88 @@ function myStyle4(feature) {
         fillColor: getwindColor(feature.properties.PERCENTAGE),
         weight: 1,
         color: getwindColor(feature.properties.PERCENTAGE),
-        fillOpacity: 0.5
+        fillOpacity: 0.86
     };
 };
 function getwindColor(d) {
-	    return d ==">90%"     ?  '#212121' :
-	       d =="80-90%"   ?  '#4a235a' :
-	       d =="70-80%"   ?  '#5b2c6f' :
-	       d =="60-70%"   ?  '#6c3483' :
-	       d =="50-60%"   ?  '#7d3c98' :
-           d =="40-50%"   ?  '#8e44ad' :
-           d =="30-40%"   ?  '#a569bd' :
-           d =="20-30%"   ?  '#bb8fce' :
-           d =="10-20%"   ?  '#d2b4de' :
-           d =="5-10%"    ?  '#e8daef' :
-           d =="<5%"      ?  '#f4ecf7':
+	    return d ==">90%" ?  '#270000' :
+	       d =="80-90%"   ?  '#6f0000' :
+	       d =="70-80%"   ?  '#930000' :
+	       d =="60-70%"   ?  '#934a00' :
+	       d =="50-60%"   ?  '#939300' :
+           d =="40-50%"   ?  '#4a9300' :
+           d =="30-40%"   ?  '#009393' :
+           d =="20-30%"   ?  '#006edb' :
+           d =="10-20%"   ?  '#48a4ff' :
+           d =="5-10%"    ?  '#90c8ff' :
+           d =="<5%"      ?  '#d8ecff' :
 		   '#e6e6ff';
 
 };	
 
 
-
-
-
-
-
-
-
-var track_forecast = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[5,6,16,17,27,28,38,39,49,50]});
-var watch_warning  = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[7,18,29,40,51]});
-var Psurge = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[14,25,36,46,58]});
-var Pwind34 = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[59]});
+var track_forecast = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[5,6,16,17,27,28,38,39,49,50]},{style: myStyle1});
+var watch_warning  = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[7,18,29,40,51]},{style: myStyle2});
+var Psurge = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[14,25,36,46,58]},{style: myStyle3});
+var Pwind34 = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[59]},{style: myStyle4});
+var Pwind50 = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[60]},{style: myStyle4});
+var Pwind64 = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[61]},{style: myStyle4});
 	
+var check_number = 0;	
+var wind_number  = 0;
 function getLayer(value){   
+    check_number = 0;
+	wind_number  = 0;
+	
     track_forecast.remove();
 	watch_warning.remove();
 	Psurge.remove();
 	Pwind34.remove();
+	Pwind50.remove();
+	Pwind64.remove();
+	
+	LHPOM2.remove();
+    geojson2.remove();
+	legend_surge.remove();
+	legend_wind.remove();
+    LHPOM.addTo(mymap);
+    geojson.addTo(mymap);
+	legend.addTo(mymap)
+	
 	document.getElementById("myCheck1").checked = false;
 	document.getElementById("myCheck2").checked = false;
 	document.getElementById("myCheck3").checked = false;
 	document.getElementById("myCheck4").checked = false;
+	document.getElementById("myCheck5").checked = false;
+	document.getElementById("myCheck6").checked = false;
 if(value=="sample"){
 	// sample hurricane layers: 2017 Harvey #15
 	track_forecast = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_5day_015.zip',{style: myStyle1});
 	watch_warning  = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017-015_ww_wwlin.zip',{style: myStyle2});
-	Psurge = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_esurge10_2017082400.zip',{style: myStyle3});
+	Psurge  = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_esurge10_2017082400.zip',{style: myStyle3});
 	Pwind34 = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/2017082400_wsp_120hr5km34.zip',{style: myStyle4});
+	Pwind50 = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/2017082400_wsp_120hr5km50.zip',{style: myStyle4});
+	Pwind64 = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/2017082400_wsp_120hr5km64.zip',{style: myStyle4});
 	}else{
     // Using external REST services
-    track_forecast = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[5,6,16,17,27,28,38,39,49,50]});
-	watch_warning  = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[7,18,29,40,51]});
-	Psurge = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[14,25,36,46,58]});
-	Pwind34 = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[59]});
+    track_forecast = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[5,6,16,17,27,28,38,39,49,50]},{style: myStyle1});
+	watch_warning  = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[7,18,29,40,51]},{style: myStyle2});
+	Psurge = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[14,25,36,46,58]},{style: myStyle3});
+	Pwind34 = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[59]},{style: myStyle4});
+	Pwind50 = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[60]},{style: myStyle4});
+	Pwind64 = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[61]},{style: myStyle4});
 	};	
 	
 };	
 
-//************************************************Backup data layers*****************************************************************************
-    
-  //var watch_warn_adv = L.esri.dynamicMapLayer({
-  //url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/watch_warn_adv/MapServer', layers:[0,1]});
- 
- //Potential Storm Surge Flooding Map
-  //var storm_surge = L.esri.dynamicMapLayer({
-  //url:'https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/wwa_meteocean_tropicalcyclones_inundation/MapServer'});
- 
- //Watches, Warnings, and Track/Intensity Forecasts
-  var best_track_fcst = L.esri.dynamicMapLayer({
-    url:'https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/wwa_meteocean_tropicalcyclones_trackintensityfcsts_time/MapServer'});
-  //https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/SPC_wx_outlks/MapServer
-  // var hist_hurr_county = 
-//https://coast.noaa.gov/arcgis/rest/services/Hurricanes/CountyStrikes/MapServer
-// this is tiled
-//CountyStrikes layer color coded to represent the amount of hurricane strikes as compared with population
 
-  //var mapLayers = {
-  //  track_forecast, surge, NHC_Atl_trop_cyclones, watch_warn_adv
-  //}; #RC - want to build list of layers to use in map layer listing to reduce # of functions used
-
-//***************************************************Add base map layers*****************************************************************************************
+//***************************************************Add base map layers*****************************************************************************************************
 
 // Create basemap layers -- basemaps http://leaflet-extras.github.io/leaflet-providers/preview/ 
-  var topo = L.esri.basemapLayer("Topographic");
-  var gray = L.esri.basemapLayer("Gray");
-  var imagery = L.esri.basemapLayer("ImageryClarity");
-  //var blkmarble = L.tileLayer("https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_DayNightBand_ENCC/default/2018-02-28/500m/6/13/36.png")
-  var blkmarble = L.tileLayer('https://map1.vis.earthdata.nasa.gov/wmts-webmerc/VIIRS_Black_Marble/default/{time}/{tilematrixset}{maxZoom}/{z}/{y}/{x}.{format}', {
+var topo = L.esri.basemapLayer("Topographic");
+var gray = L.esri.basemapLayer("Gray");
+var imagery = L.esri.basemapLayer("ImageryClarity");
+var blkmarble = L.tileLayer('https://map1.vis.earthdata.nasa.gov/wmts-webmerc/VIIRS_Black_Marble/default/{time}/{tilematrixset}{maxZoom}/{z}/{y}/{x}.{format}', {
   bounds: [[-85.0511287776, -179.999999975], [85.0511287776, 179.999999975]],
   minZoom: 1,
   maxZoom: 8,
@@ -272,32 +292,33 @@ if(value=="sample"){
   time: '',
   tilematrixset: 'GoogleMapsCompatible_Level'
 });
-  var radar = L.esri.dynamicMapLayer({url:'https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/radar_meteo_imagery_nexrad_time/MapServer/', layers:[3]});
+var radar = L.esri.dynamicMapLayer({url:'https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/radar_meteo_imagery_nexrad_time/MapServer/', layers:[3]});
   // need to include info button that links to metadata https://nowcoast.noaa.gov/metadata/radar_meteo_imagery_nexrad_time.xml
   //https://idpgis.ncep.noaa.gov/arcgis/rest/services/NOS_ESI/ESI_TexasUpperCoast_Maps/ImageServer
 
 // Initialize map with the topo basemap
-	topo.addTo(mymap);
+topo.addTo(mymap);
 
 // Create layer controls to change basemaps
-	var baseMaps ={
+var baseMaps ={
 	"Topographic":topo, 
     "Black Marble":blkmarble,
     "Imagery":imagery,
     "Light Gray":gray
 };	
-  var overlayMaps = {
+
+var overlayMaps = {
     "Radar":radar
 };
-    L.control.layers(baseMaps, overlayMaps).addTo(mymap);
 
+L.control.layers(baseMaps, overlayMaps).addTo(mymap);
 
-//*********************************************************** Legend *********************************************************
-	var legend = L.control({position: 'bottomright'});
-    legend.onAdd = function (map) {
-    var div = L.DomUtil.create('div', 'info legend'),
-        grades = [0, 10, 20, 30, 40, 50, 60],
-        labels = [];
+//******************************************************** Legend ***********************************************************************************************************
+var legend = L.control({position: 'bottomright'});
+legend.onAdd = function (map) {
+     var div = L.DomUtil.create('div', 'info legend'),
+     grades = [0, 10, 20, 30, 40, 50, 60],
+     labels = [];
     // loop through our density intervals and generate a label with a colored square for each interval
     for (var i = 0; i < grades.length; i++) {
         div.innerHTML +=
@@ -306,19 +327,134 @@ if(value=="sample"){
     }
     return div;
 };
-	legend.addTo(mymap);
+legend.addTo(mymap);
 	
-
-//********************************** Function used to add and remove layers via a checkbox ***********************************	
-function addLayerToMap(element, layer) {
-    if (element.checked){
-        layer.addTo(mymap);
-    } else {
-        layer.remove();
+var legend_surge = L.control({position: 'bottomright'});
+legend_surge.onAdd = function (map) {
+     var div = L.DomUtil.create('div', 'info legend'),
+     grades_surge = [0, 1, 2, 3, 4, 5, 6],
+     labels = [];
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades_surge.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getsurgeColor(grades_surge[i] + 0.1) + '"></i> ' +
+            grades_surge[i] + (grades_surge[i + 1] ? '&ndash;' + grades_surge[i + 1] +'%'+'<br>' :'%+');
     }
+    return div;
+};
+		
+var legend_wind = L.control({position: 'bottomright'});
+legend_wind.onAdd = function (map) {
+     var div = L.DomUtil.create('div', 'info legend'),
+     grades_wind = [0,5, 10, 20, 30, 40, 50, 60, 70, 80, 90],
+     grades =["<5%","5-10%","10-20%","20-30%","30-40%","40-50%","50-60%","60-70%","70-80%","80-90%",">90%"]
+	 labels = [];
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades_wind.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getwindColor(grades[i]) + '"></i> ' +
+            grades_wind[i] + (grades_wind[i + 1] ? '&ndash;' + grades_wind[i + 1] +'%'+'<br>' :'%+');
+    }
+    return div;
+};
+		
+//*********************************** Function used to add and remove layers via a checkbox ************************************	
+
+var flagtrack    = 0;
+var flagww       = 0;
+
+function addLayerToMap(element, layer) {
+	
+    if (element.checked){
+	    if(layer==track_forecast){
+	       flagtrack = 1;
+	    };
+	    if(layer==watch_warning){
+	       flagww    = 1;
+	    };
+		layer.addTo(mymap);
+		
+    } else {
+		
+		if(layer==track_forecast){
+	       flagtrack = 0;
+	    };
+	    if(layer==watch_warning){
+	       flagww    = 0;
+	    };	
+		
+		if(check_number==0){
+           layer.remove();
+		   LHPOM2.remove();
+		   geojson2.remove();
+		   LHPOM.addTo(mymap);
+		   geojson.addTo(mymap);
+           if(flagtrack==1){		
+		      track_forecast.bringToFront();
+		   };
+           if(flagww==1){		
+              watch_warning.bringToFront();		
+           };
+		}else{
+		   layer.remove();				
+		};	
+	};
 };
 
-//*************************************************** Download files *********************************************************
+function addLayerToMap2(element, layer) {
+    if (element.checked){
+		check_number ++;
+		
+		legend.remove();
+		if(layer==Psurge){
+	        legend_surge.addTo(mymap);
+	    }else{
+			wind_number ++;
+		    legend_wind.addTo(mymap);
+		};	
+
+		layer.addTo(mymap);
+		
+		LHPOM.remove();	
+		geojson.remove();
+		LHPOM2.remove();
+		geojson2.remove();
+		LHPOM2.addTo(mymap);
+		geojson2.addTo(mymap);	
+        
+		
+    } else {
+		check_number --;
+		
+		if(layer==Psurge){
+	        legend_surge.remove();
+	    }else{
+			wind_number --;
+			if(wind_number == 0){
+				legend_wind.remove();
+			};		    
+		};	
+		
+		if(check_number==0){
+           layer.remove();
+		   LHPOM2.remove();
+		   geojson2.remove();
+		   LHPOM.addTo(mymap);
+		   geojson.addTo(mymap);
+		   legend.addTo(mymap)
+		   if(flagtrack==1){		
+		      track_forecast.bringToFront();
+		   };
+           if(flagww==1){		
+              watch_warning.bringToFront();		
+           };
+        }else{
+		   layer.remove();				
+		};	
+    };
+};
+
+//****************************************************** Download files ****************************************************************
 function downloadObjectAsCsv(exportObj, exportName){
     var dataUrl = "http://chapmanrebecca.com/AppliedClimate/HPOM/sample.csv";
     var downloadAnchorNode = document.createElement('a');
@@ -366,7 +502,7 @@ function download() {
 	downloadObjectAsJson(HOPM, "HOPM_merged");	
 	};
 };	
-//*************************************************** print snapshot ***************************************
+//************************************************************** print snapshot **********************************************************
 L.easyPrint({
 	filename:"HOPMmap",	
 	position: 'topleft',
@@ -374,7 +510,7 @@ L.easyPrint({
 	exportOnly: true
 }).addTo(mymap);
 
-//*************************************************** add search function *********************************
+//************************************************************* add search function ******************************************************
 
 function search(){
 	var x = document.getElementById("ID").value;
@@ -392,9 +528,32 @@ function search(){
     alert('TractID: '+ x+ '\n' + 'Population affected: ' + population +'\n'+'Percentage: '+ percentage +'%');
 	};
 };	
-//***************************************************add popup************************************************
+//********************************************************************add popup************************************************************
 
 function popup(id) {
     var popup = document.getElementById(id);
     popup.classList.toggle("show");
-}
+};
+
+//************************************************Backup data layers*******************************************************************************************************************************************************
+    
+  //var watch_warn_adv = L.esri.dynamicMapLayer({
+  //url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/watch_warn_adv/MapServer', layers:[0,1]});
+ 
+ //Potential Storm Surge Flooding Map
+  //var storm_surge = L.esri.dynamicMapLayer({
+  //url:'https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/wwa_meteocean_tropicalcyclones_inundation/MapServer'});
+ 
+ //Watches, Warnings, and Track/Intensity Forecasts
+  //var best_track_fcst = L.esri.dynamicMapLayer({
+    //url:'https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/wwa_meteocean_tropicalcyclones_trackintensityfcsts_time/MapServer'});
+  //https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/SPC_wx_outlks/MapServer
+  // var hist_hurr_county = 
+//https://coast.noaa.gov/arcgis/rest/services/Hurricanes/CountyStrikes/MapServer
+// this is tiled
+//CountyStrikes layer color coded to represent the amount of hurricane strikes as compared with population
+
+  //var mapLayers = {
+  //  track_forecast, surge, NHC_Atl_trop_cyclones, watch_warn_adv
+  //}; #RC - want to build list of layers to use in map layer listing to reduce # of functions used
+  //var blkmarble = L.tileLayer("https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_DayNightBand_ENCC/default/2018-02-28/500m/6/13/36.png")
