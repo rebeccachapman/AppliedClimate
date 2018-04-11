@@ -528,6 +528,7 @@ function search(){
 	{
 	mymap.fitBounds(Lfeature.getBounds());
     alert('TractID: '+ x+ '\n' + 'Population affected: ' + population +'\n'+'Percentage: '+ percentage +'%');
+	flag = 0;
 	};
 };	
 //********************************************************************add popup************************************************************
