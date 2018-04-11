@@ -1,6 +1,5 @@
 
-//************************************ Merge power outage model output with tract ID **********************************************************************************************
-
+//************************************ Merge power outage model output with tract ID ********************************************
 // Retrived data from csv file content
 var url = "http://chapmanrebecca.com/AppliedClimate/HPOM/sample.csv";
 var request = new XMLHttpRequest();  //This is deprecated. We need to change this
@@ -15,7 +14,7 @@ for (var i = 0; i < jsonObject.length; i++) {
 
 // Read tract ID
 function Get(yourUrl){
-    var Httpreq = new XMLHttpRequest(); // a new request
+    var Httpreq = new XMLHttpRequest(); // A new request
     Httpreq.open("GET",yourUrl,false);
     Httpreq.send(null);
     return Httpreq.responseText;          
@@ -50,10 +49,9 @@ for (var j = 0; j < HPOM.features.length; j++) {
 };
 
 
-//***************************************************Map HPOM output **************************************************************************************************************
-	
+//******************************************* Map HPOM output with hover-over function ******************************************
 // Set variable for map and initialize
-	var mymap =  L.map('mapid', {
+var mymap =  L.map('mapid', {
     center: [28.3, -97.2],
     zoom: 7.5,
 });
@@ -79,13 +77,13 @@ function style2(feature) {
 
 // Change color
 	function getColor(d) {
-    return d > 60 ? '#800026' :
+    return d > 60  ? '#800026' :
            d > 50  ? '#BD0026' :
            d > 40  ? '#E31A1C' :
            d > 30  ? '#FC4E2A' :
            d > 20  ? '#FD8D3C' :
-           d > 10   ? '#FEB24C' :
-                     '#FFEDA0';
+           d > 10  ? '#FEB24C' :
+                     '#FFEDA0' ;
 };	
 
 
@@ -125,7 +123,7 @@ function onEachFeature(feature, layer) {
     });
 };
 
-
+// Interactions when wind/&surge layer is on
 function resetHighlight2(e) {
     geojson2.setStyle(style2);
 	info.update();
@@ -150,36 +148,42 @@ geojson2 = L.geoJson(HPOM, {
     style: style2,
     onEachFeature: onEachFeature2
 });	
-// add info control
+
+// Add info control
 var info = L.control();
 
 info.onAdd = function (map) {
-    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this._div = L.DomUtil.create('div', 'info'); // Create a div with a class "info"
     this.update();
     return this._div;
 };
 
-// method that we will use to update the control based on feature properties passed
+// Method that we will use to update the info control based on feature properties passed
 info.update = function (props) {
     this._div.innerHTML = '<h4>HPOM Output</h4>' +  (props ?
-        '<b>Tract: ' + props.GEOID10 + '</b><br /> Population Affected: '+ props.people+ '</b><br /> Percentage: '+ props.power + ' %'
-        : 'Hover over a census tract');
+        '<b>Tract: ' + props.GEOID10 + '</b><br /> Population Affected: '+ props.people+ '</b><br /> Percentage: '+ 
+		props.power + ' %' : 'Hover over a census tract');
 };
 
 info.addTo(mymap);	
+
 	
-//********************************************* Add hurricane map layers **********************************************************************************************************
+//********************************************* Add hurricane map layers ********************************************************
+// Style of forecast track&cone
 var myStyle1 = {
 "color": "#0000ff",
 "fillColor":"#99ccff",
 "weight": 2.5,
 "fillOpacity": 0.4
 };
+
+// Style of watches&warnings
 var myStyle2 = {
 "color": "#00ff00",
 "weight": 3,
 };
 
+// Style of storm surge probabilities
 function myStyle3(feature) {
     return {
         fillColor: getsurgeColor(feature.properties.SURGE10),
@@ -196,9 +200,10 @@ function getsurgeColor(d) {
            d > 3  ?  '#4d4dff' :
            d > 2  ?  '#8080ff' :
            d > 1  ?  '#b3b3ff' :
-                     '#e6e6ff';
+                     '#e6e6ff' ;
 };	
 
+// Style of wind speed probabilities
 function myStyle4(feature) {
     return {
         fillColor: getwindColor(feature.properties.PERCENTAGE),
@@ -219,20 +224,32 @@ function getwindColor(d) {
            d =="10-20%"   ?  '#48a4ff' :
            d =="5-10%"    ?  '#90c8ff' :
            d =="<5%"      ?  '#d8ecff' :
-		   '#e6e6ff';
+		                     '#e6e6ff' ;
 
 };	
 
-
-var track_forecast = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[5,6,16,17,27,28,38,39,49,50]},{style: myStyle1});
-var watch_warning  = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[7,18,29,40,51]},{style: myStyle2});
-var Psurge = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[14,25,36,46,58]},{style: myStyle3});
-var Pwind34 = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[59]},{style: myStyle4});
-var Pwind50 = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[60]},{style: myStyle4});
-var Pwind64 = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[61]},{style: myStyle4});
+ // Create hurricane layers from external REST services (NHC)
+var track_forecast = L.esri.dynamicMapLayer({
+	url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', 
+	layers:[5,6,16,17,27,28,38,39,49,50]},{style: myStyle1});
+var watch_warning  = L.esri.dynamicMapLayer({
+	url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', 
+	layers:[7,18,29,40,51]},{style: myStyle2});
+var Psurge = L.esri.dynamicMapLayer({
+	url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', 
+	layers:[14,25,36,46,58]},{style: myStyle3});
+var Pwind34 = L.esri.dynamicMapLayer({
+	url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', 
+	layers:[59]},{style: myStyle4});
+var Pwind50 = L.esri.dynamicMapLayer({
+	url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', 
+	layers:[60]},{style: myStyle4});
+var Pwind64 = L.esri.dynamicMapLayer({
+	url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', 
+	layers:[61]},{style: myStyle4});
 	
-var check_number = 0;	
-var wind_number  = 0;
+var check_number = 0;	// Number of total checked boxes
+var wind_number  = 0;   // Number of checked boxes of wind(34Kt&50Kt&64Kt)
 function getLayer(value){   
     check_number = 0;
 	wind_number  = 0;
@@ -258,44 +275,67 @@ function getLayer(value){
 	document.getElementById("myCheck4").checked = false;
 	document.getElementById("myCheck5").checked = false;
 	document.getElementById("myCheck6").checked = false;
-if(value=="sample"){
-	// sample hurricane layers: 2017 Harvey #15
-	track_forecast = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_5day_015.zip',{style: myStyle1});
-	watch_warning  = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017-015_ww_wwlin.zip',{style: myStyle2});
-	Psurge  = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_esurge10_2017082400.zip',{style: myStyle3});
-	Pwind34 = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/2017082400_wsp_120hr5km34.zip',{style: myStyle4});
-	Pwind50 = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/2017082400_wsp_120hr5km50.zip',{style: myStyle4});
-	Pwind64 = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/2017082400_wsp_120hr5km64.zip',{style: myStyle4});
-	}else{
-    // Using external REST services
-    track_forecast = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[5,6,16,17,27,28,38,39,49,50]},{style: myStyle1});
-	watch_warning  = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[7,18,29,40,51]},{style: myStyle2});
-	Psurge = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[14,25,36,46,58]},{style: myStyle3});
-	Pwind34 = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[59]},{style: myStyle4});
-	Pwind50 = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[60]},{style: myStyle4});
-	Pwind64 = L.esri.dynamicMapLayer({url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', layers:[61]},{style: myStyle4});
-	};	
+    
+	if(value=="sample"){
 	
+	  // Sample hurricane layers: 2017 Harvey #15
+	  track_forecast = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_5day_015.zip',
+	  {style: myStyle1});
+	  watch_warning  = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017-015_ww_wwlin.zip',
+	  {style: myStyle2});
+	  Psurge  = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_esurge10_2017082400.zip',
+	  {style: myStyle3});
+	  Pwind34 = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/2017082400_wsp_120hr5km34.zip',
+	  {style: myStyle4});
+	  Pwind50 = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/2017082400_wsp_120hr5km50.zip',
+	  {style: myStyle4});
+	  Pwind64 = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/2017082400_wsp_120hr5km64.zip',
+	  {style: myStyle4});
+	
+	}else{
+		
+    // Using external REST services
+      track_forecast = L.esri.dynamicMapLayer({
+		url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', 
+		layers:[5,6,16,17,27,28,38,39,49,50]},{style: myStyle1});
+	  watch_warning  = L.esri.dynamicMapLayer({
+		url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/',
+		layers:[7,18,29,40,51]},{style: myStyle2});
+	  Psurge = L.esri.dynamicMapLayer({
+		url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', 
+		layers:[14,25,36,46,58]},{style: myStyle3});
+	  Pwind34 = L.esri.dynamicMapLayer({
+		url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', 
+		layers:[59]},{style: myStyle4});
+	  Pwind50 = L.esri.dynamicMapLayer({
+		url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', 
+		layers:[60]},{style: myStyle4});
+	  Pwind64 = L.esri.dynamicMapLayer({
+		url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/MapServer/', 
+		layers:[61]},{style: myStyle4});
+	};	
 };	
 
 
-//***************************************************Add base map layers*****************************************************************************************************
-
+//*************************************************** Add base map layers *******************************************************
 // Create basemap layers -- basemaps http://leaflet-extras.github.io/leaflet-providers/preview/ 
 var topo = L.esri.basemapLayer("Topographic");
 var gray = L.esri.basemapLayer("Gray");
 var imagery = L.esri.basemapLayer("ImageryClarity");
-var blkmarble = L.tileLayer('https://map1.vis.earthdata.nasa.gov/wmts-webmerc/VIIRS_Black_Marble/default/{time}/{tilematrixset}{maxZoom}/{z}/{y}/{x}.{format}', {
-  bounds: [[-85.0511287776, -179.999999975], [85.0511287776, 179.999999975]],
+// Nighttime light
+var blkmarble = L.tileLayer( 
+ 'https://map1.vis.earthdata.nasa.gov/wmts-webmerc/VIIRS_Black_Marble/default/{time}/{tilematrixset}{maxZoom}/{z}/{y}/{x}.{format}', 
+ {bounds: [[-85.0511287776, -179.999999975], [85.0511287776, 179.999999975]],
   minZoom: 1,
   maxZoom: 8,
   format: 'png',
   time: '',
-  tilematrixset: 'GoogleMapsCompatible_Level'
+  tilematrixset: 'GoogleMapsCompatible_Level'}
+);
+var radar = L.esri.dynamicMapLayer({
+	url:'https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/radar_meteo_imagery_nexrad_time/MapServer/', 
+	layers:[3]
 });
-var radar = L.esri.dynamicMapLayer({url:'https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/radar_meteo_imagery_nexrad_time/MapServer/', layers:[3]});
-  // need to include info button that links to metadata https://nowcoast.noaa.gov/metadata/radar_meteo_imagery_nexrad_time.xml
-  //https://idpgis.ncep.noaa.gov/arcgis/rest/services/NOS_ESI/ESI_TexasUpperCoast_Maps/ImageServer
 
 // Initialize map with the topo basemap
 topo.addTo(mymap);
@@ -314,13 +354,15 @@ var overlayMaps = {
 
 L.control.layers(baseMaps, overlayMaps).addTo(mymap);
 
-//******************************************************** Legend ***********************************************************************************************************
+
+//******************************************************** Legend ***************************************************************
+// Legend of HPOM output
 var legend = L.control({position: 'bottomright'});
 legend.onAdd = function (map) {
-     var div = L.DomUtil.create('div', 'info legend'),
-     grades = [0, 10, 20, 30, 40, 50, 60],
-     labels = [];
-    // loop through our density intervals and generate a label with a colored square for each interval
+    var div = L.DomUtil.create('div', 'info legend'),
+    grades = [0, 10, 20, 30, 40, 50, 60],
+    labels = [];
+    // Loop through our percentage intervals and generate a label with a colored square for each interval
     for (var i = 0; i < grades.length; i++) {
         div.innerHTML +=
             '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
@@ -330,12 +372,12 @@ legend.onAdd = function (map) {
 };
 legend.addTo(mymap);
 	
+// Legend of storm surge probabilities	
 var legend_surge = L.control({position: 'bottomright'});
 legend_surge.onAdd = function (map) {
-     var div = L.DomUtil.create('div', 'info legend'),
-     grades_surge = [0, 1, 2, 3, 4, 5, 6],
-     labels = [];
-    // loop through our density intervals and generate a label with a colored square for each interval
+    var div = L.DomUtil.create('div', 'info legend'),
+    grades_surge = [0, 1, 2, 3, 4, 5, 6],
+    labels = [];
     for (var i = 0; i < grades_surge.length; i++) {
         div.innerHTML +=
             '<i style="background:' + getsurgeColor(grades_surge[i] + 0.1) + '"></i> ' +
@@ -344,13 +386,13 @@ legend_surge.onAdd = function (map) {
     return div;
 };
 		
+// Legend of wind speed probabilities		
 var legend_wind = L.control({position: 'bottomright'});
 legend_wind.onAdd = function (map) {
-     var div = L.DomUtil.create('div', 'info legend'),
-     grades_wind = [0,5, 10, 20, 30, 40, 50, 60, 70, 80, 90],
-     grades =["<5%","5-10%","10-20%","20-30%","30-40%","40-50%","50-60%","60-70%","70-80%","80-90%",">90%"]
-	 labels = [];
-    // loop through our density intervals and generate a label with a colored square for each interval
+    var div = L.DomUtil.create('div', 'info legend'),
+    grades_wind = [0,5, 10, 20, 30, 40, 50, 60, 70, 80, 90],
+    grades =["<5%","5-10%","10-20%","20-30%","30-40%","40-50%","50-60%","60-70%","70-80%","80-90%",">90%"]
+	labels = [];
     for (var i = 0; i < grades_wind.length; i++) {
         div.innerHTML +=
             '<i style="background:' + getwindColor(grades[i]) + '"></i> ' +
@@ -359,11 +401,12 @@ legend_wind.onAdd = function (map) {
     return div;
 };
 		
-//*********************************** Function used to add and remove layers via a checkbox ************************************	
 
-var flagtrack    = 0;
-var flagww       = 0;
+//***************************** Function used to add and remove layers via a checkbox *******************************************	
+var flagtrack    = 0;  // Whether track_forecast layer is on
+var flagww       = 0;  // Whether watch_warning layer is on
 
+// Checkbox function for track_forecast and watch_warning
 function addLayerToMap(element, layer) {
 	
     if (element.checked){
@@ -390,6 +433,8 @@ function addLayerToMap(element, layer) {
 		   geojson2.remove();
 		   LHPOM.addTo(mymap);
 		   geojson.addTo(mymap);
+		   
+		   // Keep track_forecast and watch_warning layers on top
            if(flagtrack==1){		
 		      track_forecast.bringToFront();
 		   };
@@ -402,6 +447,8 @@ function addLayerToMap(element, layer) {
 	};
 };
 
+
+// Checkbox function for Psurge and Pwind
 function addLayerToMap2(element, layer) {
     if (element.checked){
 		check_number ++;
@@ -455,7 +502,15 @@ function addLayerToMap2(element, layer) {
     };
 };
 
-//****************************************************** Download files ****************************************************************
+
+//*****************************************************  Add info pop-up ********************************************************
+function popup(id) {
+    var popup = document.getElementById(id);
+    popup.classList.toggle("show");
+};
+
+
+//****************************************************** Download files *********************************************************
 function downloadObjectAsCsv(exportObj, exportName){
     var dataUrl = "http://chapmanrebecca.com/AppliedClimate/HPOM/sample.csv";
     var downloadAnchorNode = document.createElement('a');
@@ -474,8 +529,8 @@ function downloadObjectAsJson(exportObj, exportName){
     downloadAnchorNode.remove();
   }  
   
-var flag1 = 0;
-var flag2 = 0;
+var flag1 = 0;  // Whether download original csv
+var flag2 = 0;  // Whether download merged geojson
 
 function FunctionEF1() {
 	var checkBox = document.getElementById("EF1");
@@ -503,17 +558,13 @@ function download() {
 	downloadObjectAsJson(HPOM, "HPOM_merged");	
 	};
 };	
-//************************************************************** print snapshot **********************************************************
-L.easyPrint({
-	filename:"HPOMmap",	
-	position: 'topleft',
-	sizeModes: ['A4Portrait', 'A4Landscape'],
-	exportOnly: true
-}).addTo(mymap);
 
-//************************************************************* add search function ******************************************************
+
+//****************************************************** Add search function ****************************************************
+flag = 0; // Whether tract_ID can be found
 function search(){
-	var x = document.getElementById("ID").value;
+	
+	x = document.getElementById("ID").value;
 	for (var j = 0; j < HPOM.features.length; j++) {
       if (x===HPOM.features[j].properties.GEOID10) {
         var percentage = HPOM.features[j].properties.power;	
@@ -526,37 +577,19 @@ function search(){
 	if(flag ===0){
 	alert('No Tract Found');}else
 	{
+	// Zoom in to searched tract	
 	mymap.fitBounds(Lfeature.getBounds());
     alert('TractID: '+ x+ '\n' + 'Population affected: ' + population +'\n'+'Percentage: '+ percentage +'%');
 	flag = 0;
 	};
+
 };	
-//********************************************************************add popup************************************************************
 
-function popup(id) {
-    var popup = document.getElementById(id);
-    popup.classList.toggle("show");
-};
 
-//************************************************Backup data layers*******************************************************************************************************************************************************
-    
-  //var watch_warn_adv = L.esri.dynamicMapLayer({
-  //url:'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/watch_warn_adv/MapServer', layers:[0,1]});
- 
- //Potential Storm Surge Flooding Map
-  //var storm_surge = L.esri.dynamicMapLayer({
-  //url:'https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/wwa_meteocean_tropicalcyclones_inundation/MapServer'});
- 
- //Watches, Warnings, and Track/Intensity Forecasts
-  //var best_track_fcst = L.esri.dynamicMapLayer({
-    //url:'https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/wwa_meteocean_tropicalcyclones_trackintensityfcsts_time/MapServer'});
-  //https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/SPC_wx_outlks/MapServer
-  // var hist_hurr_county = 
-//https://coast.noaa.gov/arcgis/rest/services/Hurricanes/CountyStrikes/MapServer
-// this is tiled
-//CountyStrikes layer color coded to represent the amount of hurricane strikes as compared with population
-
-  //var mapLayers = {
-  //  track_forecast, surge, NHC_Atl_trop_cyclones, watch_warn_adv
-  //}; #RC - want to build list of layers to use in map layer listing to reduce # of functions used
-  //var blkmarble = L.tileLayer("https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_DayNightBand_ENCC/default/2018-02-28/500m/6/13/36.png")
+//******************************************************* Print snapshot ********************************************************
+L.easyPrint({
+	filename:"HPOMmap",	
+	position: 'topleft',
+	sizeModes: ['A4Portrait', 'A4Landscape'],
+	exportOnly: true
+}).addTo(mymap);
