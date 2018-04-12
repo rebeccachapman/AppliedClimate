@@ -6,13 +6,47 @@
   height: 75px; 
   background-color:#333399; 
   padding: 1px 2px;
+  white-space:nowrap;  
 }
 	
 .container {
   display:flex;
   height:125vh;
   align-content:stretch;
+  white-space:nowrap;  
 }
+	
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #e7e7e7;
+    background-color: #f3f3f3;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: #666;
+    text-align: center;
+    padding: 8px 10px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #ddd;
+}
+
+li a.active {
+    color: white;
+    background-color: #4CAF50;
+}
+
 
 .button {
     background-color: #4CAF50;
@@ -38,6 +72,7 @@
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+	white-space:normal;
 }
 
 /* The actual popup */
@@ -91,3 +126,25 @@
     from {opacity: 0;}
     to {opacity:1 ;}
 }
+
+.title2 {
+  display:flex;
+  align-content:stretch;
+  padding: 10px 40px;
+  height: 50px; 
+}
+.container2 {
+  display:flex;
+  align-content:stretch;
+  padding: 10px 40px;
+}
+
+p {
+	 font:16px Futura;
+     align-content:stretch;
+     padding: 10px 40px;
+}
+
+p.downloadM:hover {
+	text-decoration: underline;
+}   

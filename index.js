@@ -559,6 +559,11 @@ function download() {
 	};
 };	
 
+function downloadmanual() {
+    var dataUrl = "http://chapmanrebecca.com/AppliedClimate/UserManual.docx";
+    var downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href",dataUrl);
+};	
 
 //****************************************************** Add search function ****************************************************
 flag = 0; // Whether tract_ID can be found

@@ -35,10 +35,16 @@
 <div class="title">
   <h1 align="center"><font face="Arial,Helvetica"><font color="white"><font size="+3">Hurricane Power Outage GeoViewer </font></font></font></h1>	
 </div>
-<br></br>
+
+<ul>
+  <li><a class="active" href="index.html"><strong>Home</a></li>
+  <li><a href="about.html" > About</a></li>
+  <li><a href="contact.html">Contact Us</strong></a></li>
+</ul>
+  
 <div class="container">
-  <div id="list"  align="left"  style="width: 395px" > 
-       <h3 style="color:#333399">Map Layers</h3>
+  <div id="list"  align="left"  style="width: 395px; margin-left: 5px; " > 
+       <h3 style="color:#333399"><font face="Futura">Map Layers</font></h3>
 	   <select id="mySelect" onchange="getLayer(this.options[this.selectedIndex].value)">
           <option value="current">Current Storm</option>
           <option value="sample">Sample- Harvey(2017)#15</option>
@@ -73,28 +79,30 @@
 	   <div class="popup" onclick="popup('myPopup6')"> <i class="fa fa-question-circle-o" style="color:#b3b3cc"></i>
             <span class="popuptext" id="myPopup6">The 64 knot, 120 hour cumulative wind speed probabilities show probabilities of sutained (1-minute average) surface (10-meter altitude) wind speeds equal to or exceeding 64 kt /74 mph at a regulary spaced (5 km) grid of points. </span>
        </div>
-	   <p><a href="https://www.nhc.noaa.gov/gis/">View meta data</a></p>
+	   <br></br>	
+	   <a href="https://www.nhc.noaa.gov/gis/">View meta data</a>
        <br></br>	 
        
 	   
-	   <h3 style="color:#333399">Export Files</h3>
+	   <h3 style="color:#333399"><font face="Futura">Export Files</font></h3>
 	   <input type="checkbox" id="EF1"  onclick="FunctionEF1()"> Original HPOM Output (.csv)
 	   <br></br>
 	   <input type="checkbox" id="EF2"  onclick="FunctionEF2()"> Merged HPOM Output and Tract ID (.geojson)
 	   <br></br>
        
 	   
-	   <button onclick="download()">Download</button>
+	   <button onclick="download()"><font face="Futura">Download</font></button>
 	   <h3 style="color:#333399">Search Tract to Show Results</h3>
 	   <input id="ID" type="text" placeholder="Search.." name="search">
        <button type="button" onclick="search()" ><i class="fa fa-search"></i></button>
         
   </div>
      
-  <div id="mapid" style="width: 1100px; height: 628px; margin-left:0px; margin-right:auto; position:relative; z-index: 1 "></div> 
+  <div id="mapid" style="width: 1100px; height: 620px; margin-left:0px; margin-right:auto; position:relative; z-index: 1 "></div> 
 </div>
 
 <script type="text/javascript"src="index.js"></script>
+
 </body>
 
 </html>
