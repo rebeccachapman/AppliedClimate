@@ -517,7 +517,7 @@ function downloadObjectAsCsv(exportObj, exportName){
     downloadAnchorNode.setAttribute("href",     dataUrl);
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
-  }
+};
 
 function downloadObjectAsJson(exportObj, exportName){
     var jsonData = new Blob([JSON.stringify(exportObj)], { type: 'application/json' }); 
@@ -527,7 +527,7 @@ function downloadObjectAsJson(exportObj, exportName){
     downloadAnchorNode.setAttribute("download", exportName + ".geojson");
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
-  }  
+};  
   
 var flag1 = 0;  // Whether download original csv
 var flag2 = 0;  // Whether download merged geojson
@@ -559,11 +559,6 @@ function download() {
 	};
 };	
 
-function downloadmanual() {
-    var dataUrl = "http://chapmanrebecca.com/AppliedClimate/UserManual.docx";
-    var downloadAnchorNode = document.createElement('a');
-    downloadAnchorNode.setAttribute("href",dataUrl);
-};	
 
 //****************************************************** Add search function ****************************************************
 flag = 0; // Whether tract_ID can be found
