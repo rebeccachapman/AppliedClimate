@@ -2,34 +2,10 @@
 <html>
 
 <head>
-<title>Hurricane Power Outage Model Map</title> 
+<title>Hurricane Power Outage GeoViewer | About</title> 
   <!-- External Stylesheets (we keep integrity to avoid security issues)-->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
-      integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
-      crossorigin=""/>
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <!-- Add the Leaflet JavaScript library(we keep this at bottom so page loads faster) -->
-    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
-      integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
-      crossorigin=""></script>
-  <!-- Load Esri Leaflet from CDN -->
-    <script src="https://unpkg.com/esri-leaflet@2.1.3/dist/esri-leaflet.js"
-      integrity="sha512-pijLQd2FbV/7+Jwa86Mk3ACxnasfIMzJRrIlVQsuPKPCfUBCDMDUoLiBQRg7dAQY6D1rkmCcR8286hVTn/wlIg=="
-      crossorigin=""></script>
-  <!-- Load Leaflet AJAX -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.min.js"></script>
-  <!-- Load Shapefile -->
-    <script src="https://unpkg.com/shpjs@latest/dist/shp.js"></script>
-    <script src="http://chapmanrebecca.com/AppliedClimate/HPOM/leaflet.shpfile.js"></script>	
     <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <!-- Load D3 -->
-	<script src="https://d3js.org/d3.v5.js"></script>
-  <!-- Load jquery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-  <!-- Load maprint -->
-    <script src="http://chapmanrebecca.com/AppliedClimate/HPOM/bundle.js"></script>
-	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 
@@ -37,18 +13,17 @@
 <div class="title">
   <h1 align="center"><font face="Arial,Helvetica"><font color="white"><font size="+3">Hurricane Power Outage GeoViewer </font></font></font></h1>	
 </div>
-
 <ul>
-  <li><a href="index.html"><strong>Home</a></li>
+  <li><a href="index.html"><font face="Book Antiqua"><strong><i class="fa fa-home"></i> Home</a></li>
   <li><a class="active" href="about.html" > About</a></li>
-  <li><a href="contact.html">Contact Us</strong></a></li>
+  <li><a href="contact.html">Contact Us</strong></font></a></li>
 </ul>
 
 <div class="title2">
-  <h3 style="color:#333399"><font size="+2">Introduction</h3>
+  <h3 style="color:#333399"><font size="+2"><font face="Book Antiqua">Introduction</font></font></h3>
 </div>
 
-<p align="left"> <font size="+1"><font face="Futura">
+<p align="left"> <font size="+1">
  Hurricanes devastate the Gulf Coast each year, with billions of dollars in damages, millions of people left without power, 
  and human lives put at risk. Hurricanes present both direct and indirect hazards as they progress along their track. 
  However, indirect hurricane-related hazards are often overlooked or difficult to predict. 
@@ -56,7 +31,7 @@
  often lasting days or even weeks after a storm makes landfall. Model projections can predict the locations and durations 
  of outages but can be hard to interpret for emergency decision-making. 
  <br/><br/>
- Hurricane Power Outage Geoviwer(HPOG) is  a fully integrative and interactive web map application to 
+ Hurricane Power Outage Geoviwer (HPOG) is a fully integrative and interactive web map application to 
  help making hurricane preparedness and response decisions. This app incorporates projections from the 
  Hurricane Outage Prediction Model (HOPM), developed by McRoberts et al. (2016), 
  into a decision-support tool that allows users to quickly access:
@@ -65,11 +40,20 @@
  (b) power outage predictions<br/><br/>
 
  The app can be used for:<br/>
- (a) Timely Response-- tied to real-time weather, forecast, and outage information<br/>
- (b) Mitigation and Planning-- identify vulnerabilities and predict power outage<br/>  
-</font></font></p>
+ (a) Timely Response -- tied to real-time weather, forecast, and outage information<br/>
+ (b) Mitigation and Planning -- identify vulnerabilities and predict power outage<br/>  
+</font></p>
 
 <p class="downloadM" onclick="downloadmanual()" style="cursor:pointer;"><font size="+1"; color="#333399"><strong>Download User Manual</strong></font></p>
+
+<div align="right">
+  <tr>
+    <td> <img src="HPOM/TDEM.png" height="75 px" width="75 px"></td>
+    <td> <img src="HPOM/PFUBAwJ.png" height="75 px" width="75 px"></td>
+	<td> <img src="HPOM/OSU_LOGO.jpg" height="75 px" width="150 px"></td>
+  </tr>
+</div>
+
 <script> 
 // Download user manual
 function downloadmanual() {

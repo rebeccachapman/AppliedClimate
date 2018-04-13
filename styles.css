@@ -11,11 +11,10 @@
 	
 .container {
   display:flex;
-  height:125vh;
+  height:115vh;
   align-content:stretch;
   white-space:nowrap;  
 }
-	
 
 ul {
     list-style-type: none;
@@ -140,7 +139,7 @@ li a.active {
 }
 
 p {
-	 font:16px Futura;
+	 font:16px Book Antiqua;
      align-content:stretch;
      padding: 10px 40px;
 }
