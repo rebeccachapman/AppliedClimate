@@ -47,7 +47,12 @@
       
 	   <font face="Cambria">
 	   
-       <h3 style="color:#333399"> <font face="Book Antiqua">Map Layers </font></h3>
+	   <h3 style="color:#333399"> <font face="Book Antiqua">HPOM Output </font></h3>
+	   <input type="checkbox" id="Check1" checked =true onclick="addLayerToMap_HPOM(this, LHPOM)"> Percentage of Population Affected
+       <br></br>
+	   <input type="checkbox" id="Check2"  onclick="addLayerToMap_HPOM(this, LHPOM2)"> Number of Population Affected 
+       <br></br>
+	   <h3 style="color:#333399"> <font face="Book Antiqua">Weather Map Layers </font></h3>
 	   <select id="mySelect" onchange="getLayer(this.options[this.selectedIndex].value)">
           <option value="current">Current Storm</option>
           <option value="sample">Sample- Harvey(2017)#15</option>
@@ -105,7 +110,7 @@
 	  
   </div>
      
-  <div id="mapid" style="width: 1100px; height: 620px; margin-left:0px; margin-right:auto; position:relative; z-index: 1 "></div> 
+  <div id="mapid" style="width: 1100px; height: 750px; margin-left:0px; margin-right:auto; position:relative; z-index: 1 "></div> 
 </div>
 <div align="right">
   <tr>
