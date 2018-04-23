@@ -51,7 +51,14 @@
 	   <input type="checkbox" id="Check1" checked =true onclick="addLayerToMap_HPOM(this, LHPOM)"> Percentage of Population Affected
        <br></br>
 	   <input type="checkbox" id="Check2"  onclick="addLayerToMap_HPOM(this, LHPOM2)"> Number of Population Affected 
-       <br></br>
+       <br><br>
+        <form>
+        <label>Transparency</label>
+        <input type="range" name="hpomopacity" id="hpomopacity" value="50" min="0" max="100" step="1" onchange="rangevalue.value=value">
+        <output id="rangevalue">50</output>
+        </form>
+        <div class="hpom-transparency"></div>
+       </br>
 	   <h3 style="color:#bb0000"> <font face="Book Antiqua">Weather Map Layers </font></h3>
 	   <select id="mySelect" onchange="getLayer(this.options[this.selectedIndex].value)">
           <option value="current">Current Storm</option>

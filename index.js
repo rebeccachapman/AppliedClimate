@@ -55,6 +55,13 @@ var mymap =  L.map('mapid', {
     center: [28.3, -97.2],
     zoom: 7.5,
 });
+  mymap.createPane('radar');
+
+  // This pane is above markers but below popups
+  mymap.getPane('radar').style.zIndex = 650;
+
+  // Layers in this pane are non-interactive and do not obscure mouse/touch events
+  mymap.getPane('radar').style.pointerEvents = 'none';
 
 function style(feature) {
     return {
@@ -62,7 +69,7 @@ function style(feature) {
         weight: 1,
         opacity:1,
         color: getColor(feature.properties.power),
-        fillOpacity: 0.5
+        fillOpacity: .5
     };
 };
 
@@ -72,9 +79,16 @@ function style1(feature) {
         weight: 1,
         opacity:1,
         color: getColor_P(feature.properties.people),
-        fillOpacity: 0.5
+        fillOpacity: .5
     };
 };
+
+// Opacity Slider
+$('#hpomopacity').on('input', function (value) {
+    $('.hpom-transparency').css({
+        fillopacity: $(this).val() * '.01'
+    });
+});
 
 function style2(feature) {
     return {
