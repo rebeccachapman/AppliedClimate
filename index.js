@@ -32,7 +32,7 @@ for (var j = 0; j < HPOM.features.length; j++) {
     var flag = 0;
 	for (var i = 1; i < jsonObject.length; i++) {
 		result= csvData[i];
-        if (result[0]===HPOM.features[j].properties.GEOID10) {
+        if (result[0]===HPOM.features[j].properties.GEOID) {
         HPOM.features[j].properties.power = (result[16]*100).toFixed(0);	
 		HPOM.features[j].properties.people = (result[16]*result[1]).toFixed(0);
 		flag =1;
@@ -63,13 +63,17 @@ var mymap =  L.map('mapid', {
   // Layers in this pane are non-interactive and do not obscure mouse/touch events
   mymap.getPane('radar').style.pointerEvents = 'none';
 
+function getfillOpacity() {
+    return $('#hpomopacity').val() * '.01'
+}
+
 function style(feature) {
     return {
         fillColor: getColor(feature.properties.power),
         weight: 1,
         opacity:1,
         color: getColor(feature.properties.power),
-        fillOpacity: .5
+        fillOpacity: getfillOpacity()
     };
 };
 
@@ -79,7 +83,7 @@ function style1(feature) {
         weight: 1,
         opacity:1,
         color: getColor_P(feature.properties.people),
-        fillOpacity: .5
+        fillOpacity: getfillOpacity()
     };
 };
 
@@ -88,13 +92,15 @@ $('#hpomopacity').on('input', function (value) {
     $('.hpom-transparency').css({
         fillopacity: $(this).val() * '.01'
     });
+    geojson.setStyle(style);
+    geojson_P.setStyle(style1);
 });
 
 function style2(feature) {
     return {
         fillColor: false,
-		fillOpacity:0,
-        weight: 0.5,
+		    fillOpacity:0,
+        weight: 0,
         opacity:1,
         color: 'black'
     };
@@ -224,7 +230,7 @@ info.onAdd = function (map) {
 // Method that we will use to update the info control based on feature properties passed
 info.update = function (props) {
     this._div.innerHTML = '<h4>HPOM Output</h4>' +  (props ?
-        '<b>Tract: ' + props.GEOID10 + '</b><br /> Population Affected: '+ props.people+ '</b><br /> Percentage: '+ 
+        '<b>Tract: ' + props.GEOID + '</b><br /> Population Affected: '+ props.people+ '</b><br /> Percentage: '+ 
 		props.power + ' %' : 'Hover over a census tract');
 };
 
@@ -406,7 +412,8 @@ var blkmarble = L.tileLayer(
 );
 var radar = L.esri.dynamicMapLayer({
 	url:'https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/radar_meteo_imagery_nexrad_time/MapServer/', 
-	layers:[3]
+	layers:[3],
+  pane: 'radar'
 });
 
 // Initialize map with the topo basemap
@@ -424,7 +431,7 @@ var overlayMaps = {
     "Radar":radar
 };
 
-L.control.layers(baseMaps, overlayMaps).addTo(mymap);
+L.control.layers(baseMaps, overlayMaps, {position: 'bottomleft', collapsed:false}).addTo(mymap);
 
 
 //******************************************************** Legend ***************************************************************
@@ -714,7 +721,7 @@ function search(){
 	
 	x = document.getElementById("ID").value;
 	for (var j = 0; j < HPOM.features.length; j++) {
-      if (x===HPOM.features[j].properties.GEOID10) {
+      if (x===HPOM.features[j].properties.GEOID) {
         var percentage = HPOM.features[j].properties.power;	
         var population = HPOM.features[j].properties.people;
         var Lfeature   = L.geoJson(HPOM.features[j]);		

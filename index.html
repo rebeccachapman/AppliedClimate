@@ -58,7 +58,7 @@
         <output id="rangevalue">50</output>
         </form>
         <div class="hpom-transparency"></div>
-       </br>
+       
 	   <h3 style="color:#bb0000"> <font face="Book Antiqua">Weather Map Layers </font></h3>
 	   <select id="mySelect" onchange="getLayer(this.options[this.selectedIndex].value)">
           <option value="current">Current Storm</option>
@@ -96,7 +96,7 @@
        </div>
 	   <br></br>	
 	   <a href="https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/Mapserver">NOAA REST service</a>
-       <br></br>
+    <br />
        
 	   <h3 style="color:#bb0000"><font face="Book Antiqua">Export Data</font></h3>
 	   <input type="checkbox" id="EF1"  onclick="FunctionEF1()"> Text HPOM Output (.csv)
@@ -125,10 +125,10 @@
      <h3 style="color:#bb0000"> <font face="Book Antiqua">External Applications and Data</font></h3>
      <ul style="list-style-type: none;">
      <li>
-     <a href="/archive/xgtwo/gtwo_archive.php?current_issuance=latest&amp;basin=atlc&amp;fdays=2">View 2-Day Graphical Tropical Weather Outlook</a>
+     <a href="https://www.nhc.noaa.gov/archive/xgtwo/gtwo_archive.php?current_issuance=latest&amp;basin=atlc&amp;fdays=2">View 2-Day Graphical Tropical Weather Outlook</a>
      </li>
      <li>
-     <a href="/archive/xgtwo/gtwo_archive.php?current_issuance=latest&amp;basin=atlc&amp;fdays=5">View 5-Day Graphical Tropical Weather Outlook</a>
+     <a href="https://www.nhc.noaa.gov/archive/xgtwo/gtwo_archive.php?current_issuance=latest&amp;basin=atlc&amp;fdays=5">View 5-Day Graphical Tropical Weather Outlook</a>
      </li>
      <li>
      <a href="https://worldview.earthdata.nasa.gov/?p=geographic&l=VIIRS_SNPP_CorrectedReflectance_TrueColor(hidden),MODIS_Aqua_CorrectedReflectance_TrueColor(hidden),MODIS_Terra_CorrectedReflectance_TrueColor,Reference_Labels,Coastlines(hidden),Reference_Features,VIIRS_SNPP_DayNightBand_ENCC&t=2018-04-22&z=3&v=-126.67280371888586,19.065843874902043,-76.11811621888586,46.34709387490204" target="_blank">
