@@ -9,16 +9,21 @@
   white-space:nowrap;  
 }
 .link{
-  height: 15px; 
-  padding-top: 250px;
+/*  height: 15px; */
+  padding-top: 1px;
+  padding-bottom: 10px;
   white-space:nowrap;  
   margin-left: 5px;
 }	
-	
+.logos{
+  padding-top: :1px;
+  text-align: right;
+}
+
 .container {
   display:flex;
-  height:100vh;
-  align-content:stretch;
+/*  height:100vh;
+*/  align-content:stretch;
   white-space:nowrap;  
 }
 
