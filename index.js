@@ -20,7 +20,7 @@ function Get(yourUrl){
     return Httpreq.responseText;          
 };
 
-var HPOM = JSON.parse(Get('http://chapmanrebecca.com/AppliedClimate/HPOM/ctract.geojson'));	
+var HPOM = JSON.parse(Get('http://chapmanrebecca.com/AppliedClimate/HPOM/TXctract.geojson'));	
 
 for (var i = 0; i < HPOM.features.length; i++) {
     HPOM.features[i].properties.power = 0;
