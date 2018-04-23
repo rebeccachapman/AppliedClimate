@@ -415,9 +415,11 @@ var radar = L.esri.dynamicMapLayer({
 	layers:[3],
   pane: 'radar'
 });
+var basemaplabels = L.esri.basemapLayer("ImageryLabels");
 
-// Initialize map with the topo basemap
-topo.addTo(mymap);
+// Initialize map with the imagery basemap and labels
+imagery.addTo(mymap);
+basemaplabels.addTo(mymap);
 
 // Create layer controls to change basemaps
 var baseMaps ={
@@ -428,7 +430,8 @@ var baseMaps ={
 };	
 
 var overlayMaps = {
-    "Radar":radar
+    "Radar":radar,
+    "Labels":basemaplabels
 };
 
 L.control.layers(baseMaps, overlayMaps, {position: 'bottomleft', collapsed:false}).addTo(mymap);
