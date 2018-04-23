@@ -143,6 +143,11 @@ li a.active {
   padding: 10px 40px;
   height: 50px; 
 }
+
+h3.email:hover{
+	text-decoration: underline;
+}	
+	
 .container2 {
   display:flex;
   align-content:stretch;
