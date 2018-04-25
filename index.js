@@ -100,9 +100,11 @@ function style2(feature) {
     return {
         fillColor: false,
 		    fillOpacity:0,
-        weight: 0,
+        weight: 0.3,
         opacity:1,
-        color: 'black'
+		//dashArray: '1',
+        color: 'white'
+		
     };
 };
 
