@@ -1,7 +1,7 @@
 
 //************************************ Merge power outage model output with tract ID ********************************************
 // Retrived data from csv file content
-var url = "http://chapmanrebecca.com/AppliedClimate/HPOM/sample.csv";
+var url = "http://hurricanepoweroutagemodel.science/HPOM/sample.csv";
 var request = new XMLHttpRequest();  //This is deprecated. We need to change this
 request.open("GET", url, false);   
 request.send(null);  
@@ -20,7 +20,7 @@ function Get(yourUrl){
     return Httpreq.responseText;          
 };
 
-var HPOM = JSON.parse(Get('http://chapmanrebecca.com/AppliedClimate/HPOM/TXctract.geojson'));	
+var HPOM = JSON.parse(Get('http://hurricanepoweroutagemodel.science/HPOM/TXctract.geojson'));	
 
 for (var i = 0; i < HPOM.features.length; i++) {
     HPOM.features[i].properties.power = 0;
@@ -359,17 +359,17 @@ function getLayer(value){
 	if(value=="sample"){
 	
 	  // Sample hurricane layers: 2017 Harvey #15
-	  track_forecast = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_5day_015.zip',
+	  track_forecast = new L.Shapefile('http://hurricanepoweroutagemodel.science/HPOM/al092017_5day_015.zip',
 	  {style: myStyle1});
-	  watch_warning  = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017-015_ww_wwlin.zip',
+	  watch_warning  = new L.Shapefile('http://hurricanepoweroutagemodel.science/HPOM/al092017-015_ww_wwlin.zip',
 	  {style: myStyle2});
-	  Psurge  = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/al092017_esurge10_2017082400.zip',
+	  Psurge  = new L.Shapefile('http://hurricanepoweroutagemodel.science/HPOM/al092017_esurge10_2017082400.zip',
 	  {style: myStyle3});
-	  Pwind34 = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/2017082400_wsp_120hr5km34.zip',
+	  Pwind34 = new L.Shapefile('http://hurricanepoweroutagemodel.science/HPOM/2017082400_wsp_120hr5km34.zip',
 	  {style: myStyle4});
-	  Pwind50 = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/2017082400_wsp_120hr5km50.zip',
+	  Pwind50 = new L.Shapefile('http://hurricanepoweroutagemodel.science/HPOM/2017082400_wsp_120hr5km50.zip',
 	  {style: myStyle4});
-	  Pwind64 = new L.Shapefile('http://chapmanrebecca.com/AppliedClimate/HPOM/2017082400_wsp_120hr5km64.zip',
+	  Pwind64 = new L.Shapefile('http://hurricanepoweroutagemodel.science/HPOM/2017082400_wsp_120hr5km64.zip',
 	  {style: myStyle4});
 	
 	}else{
@@ -672,7 +672,7 @@ function popup(id) {
 
 //****************************************************** Download files *********************************************************
 function downloadObjectAsCsv(exportObj, exportName){
-    var dataUrl = "http://chapmanrebecca.com/AppliedClimate/HPOM/sample.csv";
+    var dataUrl = "http://hurricanepoweroutagemodel.science/HPOM/sample.csv";
     var downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute("href",     dataUrl);
     downloadAnchorNode.click();
