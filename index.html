@@ -38,37 +38,34 @@
 
 <ul>
   <li><a class="active" href="index.html"><font face="Book Antiqua"><strong><i class="fa fa-home"></i> Home</a></li>
-  <li><a href="about.html" >About</a></li>
+  <li><a href="about.html" > About</a></li>
   <li><a href="contact.html">Contact Us</strong></font></a></li>
 </ul>
 
 
 <div class="container">
-  <div id="list"  align="left"  style="width:300px; height:800px; padding-right: 10px; margin-left: auto; margin-right: auto; float:left; word-wrap: normal" > 
-  <h3 style="color:#bb0000"><font face="Book Antiqua">HPOM Output </font></h3>
-    <font face="Cambria">
-    <input type="checkbox" id="Check1" checked =true onclick="addLayerToMap_HPOM(this, LHPOM)"> Percentage of Population Affected<br></br>
-    <input type="checkbox" id="Check2"  onclick="addLayerToMap_HPOM(this, LHPOM2)"> Number of Population Affected<br><br>
-    <form>
-      <label>Transparency</label>
+  <div id="list"  align="left"  style="width:300px; height:800px; padding-right: 10px; margin-left: auto; margin-right: auto;float:left;" > 
+      
+	   <font face="Cambria">
+	   
+	   <h3 style="color:#bb0000"> <font face="Book Antiqua">HPOM Output </font></h3>
+	   <input type="checkbox" id="Check1" checked =true onclick="addLayerToMap_HPOM(this, LHPOM)"> Percentage of Population Affected
+       <br></br>
+	   <input type="checkbox" id="Check2"  onclick="addLayerToMap_HPOM(this, LHPOM2)"> Number of Population Affected 
+       <br><br>
+        <form>
+        <label>Transparency</label>
         <input type="range" name="hpomopacity" id="hpomopacity" value="50" min="0" max="100" step="5" onchange="rangevalue.value=value" style="width: 130px;">
         <output id="rangevalue">50</output>
-    </form>
+        </form>
         <div class="hpom-transparency"></div>
-    <br /><form action="">
-        <input type="radio" name="Category" value="1"> One
-        <input type="radio" name="Category" value="2"> Two
-        <input type="radio" name="Category" value="3"> Three
-        <input type="radio" name="Category" value="4"> Four
-        <input type="radio" name="Category" value="5"> Five
-    </form>
-        IN PROGRESS: Use these radio-buttons to display alternative scenarios of power outages based on different Saffir-Simpson hurricane wind scales.
-
-  <h3 style="color:#bb0000"> <font face="Book Antiqua">Weather Map Layers </font></h3>
+       
+	   <h3 style="color:#bb0000"> <font face="Book Antiqua">Weather Map Layers </font></h3>
 	   <select id="mySelect" onchange="getLayer(this.options[this.selectedIndex].value)">
           <option value="current">Current Storm</option>
           <option value="sample">Sample- Harvey(2017)#15</option>
-      </select><br></br>
+       </select>
+	   <br></br>
 	   <input type="checkbox" id="myCheck1"  onclick="addLayerToMap(this, track_forecast)"> Forecast Track and Cone 
 	   <div class="popup" onclick="popup('myPopup1')"> <i class="fa fa-question-circle-o" style="color:#b3b3cc"></i>
             <span class="popuptext" id="myPopup1">The cone represents the probable track of the center of a tropical cyclone, and is formed by enclosing the area swept out by a set of circles (not shown) along the forecast track (at 12, 24, 36, 48, 72, 96, 120 hours). </span>
@@ -99,9 +96,9 @@
             <span class="popuptext" id="myPopup6">The 64 knot, 120 hour cumulative wind speed probabilities show probabilities of sutained (1-minute average) surface (10-meter altitude) wind speeds equal to or exceeding 64 kt /74 mph at a regulary spaced (5 km) grid of points. </span>
        </div>
 	   <br></br>	
-	   <a href="https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/Mapserver">Source: NOAA REST service</a>
+	   <a href="https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/NHC_Atl_trop_cyclones/Mapserver">NOAA REST service</a>
     <br />
-
+       
 	   <h3 style="color:#bb0000"><font face="Book Antiqua">Export Data</font></h3>
 	   <input type="checkbox" id="EF1"  onclick="FunctionEF1()"> Text HPOM Output (.csv)
 	   <br></br>
