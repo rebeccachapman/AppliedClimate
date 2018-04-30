@@ -396,7 +396,6 @@ function getLayer(value){
 	};	
 };	
 
-
 //*************************************************** Add base map layers *******************************************************
 // Create basemap layers -- basemaps http://leaflet-extras.github.io/leaflet-providers/preview/ 
 var topo = L.esri.basemapLayer("Topographic");
@@ -500,13 +499,12 @@ legend_wind.onAdd = function (map) {
     return div;
 };
 		
-
 //***************************** Function used to add and remove layers via a checkbox *******************************************	
 // Checkbox function for HPOM output
 var flagpower    = 1;  // Whether LHPOM layer is on
 var flagpeople   = 0;  // Whether LHPOM_P layer is on
 function addLayerToMap_HPOM(element, layer) {
-	
+
     if (element.checked){
 
       	if(layer==LHPOM){
@@ -719,11 +717,9 @@ function download() {
 	};
 };	
 
-
 //****************************************************** Add search function ****************************************************
 flag = 0; // Whether tract_ID can be found
 function search(){
-	
 	x = document.getElementById("ID").value;
 	for (var j = 0; j < HPOM.features.length; j++) {
       if (x===HPOM.features[j].properties.GEOID) {
@@ -742,9 +738,7 @@ function search(){
     alert('TractID: '+ x+ '\n' + 'Population affected: ' + population +'\n'+'Percentage: '+ percentage +'%');
 	flag = 0;
 	};
-
 };	
-
 
 //******************************************************* Print snapshot ********************************************************
 L.easyPrint({
