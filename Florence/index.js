@@ -46,7 +46,8 @@ for (var j = 0; j < HPOM.features.length; j++) {
 	   j--;
     };
 };
-/*
+
+/* Select tracts
 var HPOM1 = JSON.parse(Get('https://raw.githubusercontent.com/arcee123/GIS_GEOJSON_CENSUS_TRACTS/master/45.geojson'));
 var HPOM2 = JSON.parse(Get('https://raw.githubusercontent.com/arcee123/GIS_GEOJSON_CENSUS_TRACTS/master/51.geojson'));
 for (var j = 0; j < HPOM1.features.length; j++) {
