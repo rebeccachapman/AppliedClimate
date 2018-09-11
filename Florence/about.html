@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>HPOMG | About</title> 
+  <!-- External Stylesheets (we keep integrity to avoid security issues)-->
+    <link rel="stylesheet" href="styles.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<center>
+<div class="title">
+  <h1 align="center"><font face="Helvetica"><font color="white"><font size="+3">Hurricane Power Outage Model GeoViewer</font></font></font></h1>	
+</div>
+<ul>
+  <li><a href="index.html"><font face="Book Antiqua"><strong><i class="fa fa-home"></i> Home</a></li>
+  <li><a class="active" href="about.html" > About</a></li>
+  <li><a href="contact.html">Contact Us</strong></font></a></li>
+</ul>
+
+<div class="title2" align="left">
+  <h3 style="color:#bb0000"><font size="+2"><font face="Book Antiqua">Introduction</font></font></h3>
+</div>
+
+<div class="container3" align="left">
+<p align="left"> <font size="+1">
+ Hurricanes devastate the Gulf Coast each year, with billions of dollars in damages, millions of people left without power, and human lives put at risk. Hurricanes present both direct and indirect hazards as they progress along their track. However, indirect hurricane-related hazards are often overlooked or difficult to predict. For example, hurricane-related power outages are among the most prevalent and hazardous effects of severe hurricanes, often lasting days or even weeks after a storm makes landfall. Model projections can predict the locations and durations of outages but can be hard to interpret for emergency decision-making. 
+ <br/><br/>
+The Hurricane Power Outage Model GeoViewer (HPOMG) provides a user-friendly web-based application to help make hurricane preparedness and response decisions. This product incorporates projections from the Hurricane Power Outage Prediction Model (HPOM), developed by McRoberts et al. (2016), into a decision-support tool. This easy-to-use interface can represent HPOM output in conjunction to locations of critical public facilities, water treatment facilities, and geographic areas of vulnerability to better equip emergency managers with the tools to make informed decisions. With this newly-developed geographic interface, users will have access to:
+ <br/>
+ (a) Near real-time hurricane and tropical cyclone power outage tracking<br/>
+ (b) An integrative interface displaying spatial data layers of additional weather parameters<br/>
+ (c) Additional hurricane and tropical cyclone forecasts<br/>
+ (d) Downloadable model outputs, geographic files, and images<br/><br/>
+
+ The app can be used for:<br/>
+ (a) Timely Response - Real-time weather forecasts and outage information<br/>
+ (b) Mitigation and Planning - Additional hazardous forecast layers that can be viewed in conjunction to power outages <br/>  
+</font></p>
+
+<p align="left" class="downloadM" onclick="downloadmanual()" style="cursor:pointer;"><font size="+1"; color="#bb0000"><strong>Download User Manual</strong></font></p>
+
+
+<div class="logos" align="right">
+  <tr>
+  <td> <img src="HPOM/OSU_LOGO.jpg" height="75 px" width="150 px"></td>
+  </tr>
+</div>
+</div>
+
+</center>
+
+<script> 
+// Download user manual
+function downloadmanual() {
+    var dataUrl = "https://94ycwang.github.io/TDEM/HPOM/User_manual.pdf";
+    var downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href",dataUrl);
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+};	
+</script>
+
+</body>
+
+</html>
+
