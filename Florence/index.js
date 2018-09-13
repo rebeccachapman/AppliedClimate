@@ -725,7 +725,7 @@ function popup(id) {
 
 //****************************************************** Download files *********************************************************
 function downloadObjectAsCsv(exportObj, exportName){
-    var dataUrl = "http://hurricanepoweroutagemodel.science/Florence/HPOM/Florence_2018091218_OFCL_Prediction_F.csv";
+    var dataUrl = "http://hurricanepoweroutagemodel.science/Florence/HPOM/Florence_2018091306_OFCL_Prediction_F.csv";
     var downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute("href",     dataUrl);
     downloadAnchorNode.click();
