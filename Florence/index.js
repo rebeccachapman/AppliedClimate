@@ -20,34 +20,10 @@ function Get(yourUrl){
     Httpreq.send(null);
     return Httpreq.responseText;          
 };
-var HPOM = JSON.parse(Get('http://hurricanepoweroutagemodel.science/Florence/HPOM/tract.geojson'));
-for (var i = 0; i < HPOM.features.length; i++) {
-    HPOM.features[i].properties.power = 0;
-    HPOM.features[i].properties.people = 0;	
-};
+var HPOM = JSON.parse(Get('https://raw.githubusercontent.com/arcee123/GIS_GEOJSON_CENSUS_TRACTS/master/37.geojson'));
 
 
-// Merge
-for (var j = 0; j < HPOM.features.length; j++) {
-    var flag = 0;
-	for (var i = 1; i < jsonObject.length; i++) {
-		result= csvData[i];
-        if (result[0]===HPOM.features[j].properties.GEOID) {
-        HPOM.features[j].properties.power = (result[16]*100).toFixed(0);	
-		HPOM.features[j].properties.people = (result[16]*result[1]).toFixed(0);
-		flag =1;
-        }		
-    }	
-	if(flag === 0){	
-	   delete HPOM.features[j];
-	   HPOM.features = HPOM.features.filter(function( element ) {
-               return element !== undefined;
-       });
-	   j--;
-    };
-};
-
-/* Select tracts
+// Select tracts
 var HPOM1 = JSON.parse(Get('https://raw.githubusercontent.com/arcee123/GIS_GEOJSON_CENSUS_TRACTS/master/45.geojson'));
 var HPOM2 = JSON.parse(Get('https://raw.githubusercontent.com/arcee123/GIS_GEOJSON_CENSUS_TRACTS/master/51.geojson'));
 for (var j = 0; j < HPOM1.features.length; j++) {
@@ -71,6 +47,28 @@ for (var j = 0; j < HPOM1.features.length; j++) {
 };
 
 
+// Merge
+for (var j = 0; j < HPOM.features.length; j++) {
+    var flag = 0;
+	for (var i = 1; i < jsonObject.length; i++) {
+		result= csvData[i];
+        if (result[0]===HPOM.features[j].properties.GEOID) {
+        HPOM.features[j].properties.power = (result[16]*100).toFixed(0);	
+		HPOM.features[j].properties.people = (result[16]*result[1]).toFixed(0);
+		flag =1;
+        }		
+    }	
+	if(flag === 0){	
+	   delete HPOM.features[j];
+	   HPOM.features = HPOM.features.filter(function( element ) {
+               return element !== undefined;
+       });
+	   j--;
+    };
+};
+
+
+
 for (var j = 0; j < HPOM2.features.length; j++) {
     var flag = 0;
 	for (var i = 1; i < jsonObject.length; i++) {
@@ -90,7 +88,7 @@ for (var j = 0; j < HPOM2.features.length; j++) {
 	   j--;
     };
 };
-*/
+
 
 //******************************************* Map HPOM output with hover-over function ******************************************
 // Set variable for map and initialize
