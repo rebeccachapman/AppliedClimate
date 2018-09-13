@@ -810,7 +810,7 @@ L.easyPrint({
 }).addTo(mymap);
 
 //******************************************************* Add forecast track ********************************************************
-var urlforecast = "http://hurricanepoweroutagemodel.science/Florence/HPOM/Florence_2018091200_OFCI_Track_MPH.csv";
+var urlforecast = "http://hurricanepoweroutagemodel.science/Florence/HPOM/Florence_2018091218_OFCI_Track_MPH.csv";
 var request = new XMLHttpRequest();  
 request.open("GET", urlforecast, false);   
 request.send(null);  
