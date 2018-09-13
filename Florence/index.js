@@ -1,7 +1,7 @@
 
 //************************************ Merge power outage model output with tract ID *********************************************
 // Retrived data from csv file content
-var url = "http://hurricanepoweroutagemodel.science/Florence/HPOM/Florence_2018091306_OFCL_Prediction_F.csv";
+var url = "http://hurricanepoweroutagemodel.science/Florence/HPOM/Florence_2018091312_OFCL_Prediction_F.csv";
 var request = new XMLHttpRequest();  //This is deprecated. We need to change this
 request.open("GET", url, false);   
 request.send(null);  
@@ -725,7 +725,7 @@ function popup(id) {
 
 //****************************************************** Download files *********************************************************
 function downloadObjectAsCsv(exportObj, exportName){
-    var dataUrl = "http://hurricanepoweroutagemodel.science/Florence/HPOM/Florence_2018091306_OFCL_Prediction_F.csv";
+    var dataUrl = "http://hurricanepoweroutagemodel.science/Florence/HPOM/Florence_2018091312_OFCL_Prediction_F.csv";
     var downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute("href",     dataUrl);
     downloadAnchorNode.click();
@@ -808,7 +808,7 @@ L.easyPrint({
 }).addTo(mymap);
 
 //******************************************************* Add forecast track ********************************************************
-var urlforecast = "http://hurricanepoweroutagemodel.science/Florence/HPOM/Florence_2018091306_OFCL_Track_MPH.csv";
+var urlforecast = "http://hurricanepoweroutagemodel.science/Florence/HPOM/Florence_2018091312_OFCL_Track_MPH.csv";
 var request = new XMLHttpRequest();  
 request.open("GET", urlforecast, false);   
 request.send(null);  
