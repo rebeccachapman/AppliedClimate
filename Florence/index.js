@@ -1,7 +1,7 @@
 
 //************************************ Merge power outage model output with tract ID *********************************************
 // Retrived data from csv file content
-var url = "http://hurricanepoweroutagemodel.science/Florence/HPOM/Florence_2018091200_OFCI_Prediction_F.csv";
+var url = "http://hurricanepoweroutagemodel.science/Florence/HPOM/Florence_2018091218_OFCL_Prediction_F.csv";
 var request = new XMLHttpRequest();  //This is deprecated. We need to change this
 request.open("GET", url, false);   
 request.send(null);  
@@ -727,7 +727,7 @@ function popup(id) {
 
 //****************************************************** Download files *********************************************************
 function downloadObjectAsCsv(exportObj, exportName){
-    var dataUrl = "http://hurricanepoweroutagemodel.science/Florence/HPOM/Florence_2018091200_OFCI_Prediction_F.csv";
+    var dataUrl = "http://hurricanepoweroutagemodel.science/Florence/HPOM/Florence_2018091218_OFCL_Prediction_F.csv";
     var downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute("href",     dataUrl);
     downloadAnchorNode.click();
