@@ -1,7 +1,7 @@
 
 //************************************ Merge power outage model output with tract ID *********************************************
 // Retrived data from csv file content
-var url = "http://hurricanepoweroutagemodel.science/Florence/HPOM/Florence_2018091218_OFCL_Prediction_F.csv";
+var url = "https://www.dropbox.com/s/jexlvby7q6v5o04/OFCL_Prediction.csv";
 var request = new XMLHttpRequest();  //This is deprecated. We need to change this
 request.open("GET", url, false);   
 request.send(null);  
@@ -808,7 +808,7 @@ L.easyPrint({
 }).addTo(mymap);
 
 //******************************************************* Add forecast track ********************************************************
-var urlforecast = "http://hurricanepoweroutagemodel.science/Florence/HPOM/Florence_2018091218_OFCL_Track_MPH.csv";
+var urlforecast = "https://www.dropbox.com/s/73oxy93bokrbg7o/OFCL_Track_MPH.csv";
 var request = new XMLHttpRequest();  
 request.open("GET", urlforecast, false);   
 request.send(null);  
